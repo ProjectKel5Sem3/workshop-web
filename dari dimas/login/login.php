@@ -20,19 +20,19 @@
                 $userval = $row['user_email'];
                 $passval =$row['user_password'];
 
-                if($userval == $email && $passval == $pass){
+                if ($userval == $email && $passval == $pass) {
                     $_SESSION['id'] = $idval;
                     
                     header('location: ../dashboard/dashboard_percobaan.php');
                     exit;
                 } else {
-                    $error = "user atau password salah!!";
+                    $error = "USER ATAU PASSWORD SALAH!!";
                 }
             } else {
-                $error = "user tidak ditemukan";
+                $error = "USER TIDAK DITEMUKAN!!";
             }
         } else {
-            $error = "data tidak boleh kosong";;
+            $error = "DATA TIDAK BOLEH KOSONG!!";
         }
     }
 ?>
@@ -60,18 +60,19 @@
                         <div class="form-group">
                             <label for="txt_pass">Password</label>
                             <div class="input">
-                                <input type="password" class="form-control" id="txt_pass" name="txt_pass" placeholder="Enter Password" onmouseover="showPassword(this)" onmouseout="hidePassword(this)">
+                                <input type="password" class="form-control" id="txt_pass" name="txt_pass" maxlength="6" placeholder="Enter Password" onmouseover="showPassword(this)" onmouseout="hidePassword(this)">
                             </div>
                         </div>
 
                         <!-- <label><input class="checkbox" type="checkbox" id="condition" name="condition" value="1"> I agree to terms & condtions<br></label> -->
-                        <button class="btn1" type="submit" name="submit" id="loginBtn">Login</button>
-                        <p style="text-align:right; margin-top:5px;">tidak punya akun?? <a href="#">register dulu</a></p>
+                        <button class="btn1" type="submit" name="submit" id="loginBtn">Masuk</button>
+                        <p style="text-align:right; margin-top:5px;">tidak punya akun?? <a href="../register/register.php">register dulu</a></p>
                         <p class="or">------------------- or --------------------</p>
                         <button class="btn2">
                                 <img class="image2" src="../img/flat-color-icons_google.png">
                                 <h2>Login with Google</h2>
                         </button>
+                        <div class="errorHandle"><?php echo $error; ?></div>
                     </form>
                 </div>
             </div>

@@ -37,22 +37,7 @@
     color: #6B5048;
 }
 
-.box_profil{
-    position: relative;
-    width: 128vh;
-    height: 70vh;
-    margin-top: 5vh;
-    margin-left: 5vh;
-
-    display: flex;
-    align-items: center;
-    /* justify-content: center; */
-
-    background: #D8B894;
-
-    border-radius: 5vh;
-}
-
+/* profil */
 .pic1{
     width: 40vh;
     /* height: 50vh; */
@@ -78,7 +63,6 @@
 }
 
 /* table */
-
 .t1{
     margin-top: 2vh;
 }
@@ -101,6 +85,28 @@
     font-size: 2vh;
     color: #6B5048;
 } */
+
+/* pelanggan */
+.tab1{
+    padding: 3vh;
+}
+
+.tab1 table{
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.tab1 thead tr, tbody tr{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.tab1 th {
+    background-color: #f2f2f2;
+}
 
 /* sidebar */
 .navbar1{

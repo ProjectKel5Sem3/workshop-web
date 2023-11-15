@@ -1,5 +1,29 @@
 <?php
-require_once("../koneksi.php")
+    require_once("../koneksi.php");
+
+    session_start();
+
+    $error = "";
+
+    if (isset($_POST['submit'])) {
+        $fullname = $_POST['nama'];
+        $email = $_POST['email'];
+        $pass = $_POST['pass'];
+
+        if (!empty($fullname) && !empty($email) && !empty($pass)) {
+            $query = "INSERT INTO `user_detail` (`id`, `user_email`, `user_password`, `user_fullname`, `telp`, `alamat`, `pict`, `level`) VALUES (NULL, '$email', '$pass', '$fullname', '', '', '', 1);";
+            $result = mysqli_query($koneksi, $query);
+
+            if ($result) {
+                header('Location: ../login/login.php');
+                exit;
+            } else {
+                $error = "GAGAL MENAMBAHKAN DATA KE DALAM DATABASE!";
+            }
+        } else {
+            $error = "SEMUA INPUT HARUS DIISI!";
+        }
+    }
 
 ?>
 
@@ -16,11 +40,11 @@ require_once("../koneksi.php")
             <div class="a">
                 <h2>Hello</h2>
                 <div class="form">
-                    <form action="#" method="post" id="information_form">
+                    <form action="register.php" method="POST">
                         <div class="form-group">
-                            <label for="name">Your Fullname*</label>
+                            <label for="nama">Your Fullname*</label>
                             <div class="input">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name">
+                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Enter Your Name">
                             </div>
                         </div>
                         <div class="form-group">
@@ -38,14 +62,21 @@ require_once("../koneksi.php")
 
                         <!-- <label><input class="checkbox" type="checkbox" id="condition" name="condition" value="1"> I agree to terms & condtions<br></label> -->
 
-                        <button class="btn1" type="submit" id="loginBtn">Login</button>
+                        <button class="btn1" type="submit" name="submit" id="loginBtn">Daftar</button>
+                        <p style="text-align:right; margin-top:5px;">Sudah punya akun!! <a href="../login/login.php">Langsung masuk saja!</a></p>
+
+                        <!-- <p class="or">------------------- or --------------------</p> -->
+                        <p class="or"> <?php echo !empty($error) ? $error : '------------------- or --------------------'; ?> </p>
+                        <!-- <p class="or"><php echo $error; ?></p> -->
+
                     </form>
-                    <p class="or">------------------- or --------------------</p>
+
                     <button class="btn2">
                             <img class="image2" src="../img/flat-color-icons_google.png">
                             <h2>Login with Google</h2>
                             <!-- <a href="login.php"></a> -->
                     </button>
+                    
                 </div>
             </div>
         </div>

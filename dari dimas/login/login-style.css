@@ -142,3 +142,15 @@
     padding-top: 15px;
     margin-left: 40px;
 }
+
+.errorHandle{
+    margin-top: 14vh;
+    text-align: center;
+    /* background: red; */
+    width: auto;
+    height: 5vh;
+    /* border-radius: 3vh; */
+    font-size: 3vh;
+    padding-top: 1vh;
+    font-weight: bold;
+}
