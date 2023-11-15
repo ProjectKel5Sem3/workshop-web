@@ -1,37 +1,40 @@
 <?php
-require_once ('../koneksi.php');
+    require_once ('../koneksi.php');
+    
+    session_start();
 
-$error = "";
+    $error = "";
 
-if (isset($_POST['submit'])){
-    $email = $_POST['txt_email'];
-    $pass = $_POST['txt_pass'];
+    if (isset($_POST['submit'])){
+        $email = $_POST['txt_email'];
+        $pass = $_POST['txt_pass'];
 
-    if(!empty(trim($email)) && !empty(trim($pass))){
-        $query = "SELECT *FROM user_detail WHERE user_email = '$email'";
-        $result = mysqli_query($koneksi, $query);
-        $row = mysqli_fetch_assoc($result);
+        if(!empty(trim($email)) && !empty(trim($pass))){
+            $query = "SELECT *FROM user_detail WHERE user_email = '$email'";
+            $result = mysqli_query($koneksi, $query);
+            $row = mysqli_fetch_assoc($result);
 
-        if ($row) {
-            $idval = $row['id'];
-            $userval = $row['user_email'];
-            $passval =$row['user_password'];
+            if ($row) {
+                $idval = $row['id'];
+                $valName = $row['user_fullname'];
+                $userval = $row['user_email'];
+                $passval =$row['user_password'];
 
-            if($userval == $email && $passval == $pass){
-                $_SESSION['id'] = $idval;
-                
-                header('location: test.php');
-                exit;
+                if($userval == $email && $passval == $pass){
+                    $_SESSION['id'] = $idval;
+                    
+                    header('location: ../dashboard/dashboard_percobaan.php');
+                    exit;
+                } else {
+                    $error = "user atau password salah!!";
+                }
             } else {
-                $error = "user atau password salah!!";
+                $error = "user tidak ditemukan";
             }
         } else {
-            $error = "user tidak ditemukan";
+            $error = "data tidak boleh kosong";;
         }
-    } else {
-        $error = "data tidak boleh kosong";;
     }
-}
 ?>
 
 <!DOCTYPE html>
