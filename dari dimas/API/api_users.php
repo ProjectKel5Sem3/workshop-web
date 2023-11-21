@@ -1,4 +1,13 @@
 <?php
+/*
+    catatan:
+    terdapat 2 login dengan GET dan POST
+    sisanya
+    -show user pada GET
+    -tambah user / register pada POST
+    -edit data user pada PUT
+    -hapus user pada DELETE
+*/
 
 header ('Content-Type: application/json');
 
