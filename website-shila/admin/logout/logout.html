@@ -22,30 +22,36 @@
     <link rel="stylesheet" href="logout.css" />
   </head>
   <body>
-    <section>
-      <button class="show-modal">Show Modal</button>
+    <section class="logout-popup">
       <span class="overlay"></span>
       <div class="modal-box">
         <i class="fas fa-right-from-bracket"></i>
         <h3>Apakah anda yakin ingin logout?</h3>
         <div class="buttons">
-          <button>Logout</button>
-          <button class="close-btn">Batal</button>
+          <button onclick="logout()">Logout</button>
+          <button class="close-btn" onclick="closeLogoutPopup()">Batal</button>
         </div>
       </div>
     </section>
+
     <script>
-      const section = document.querySelector("section"),
-        overlay = document.querySelector(".overlay"),
-        showBtn = document.querySelector(".show-modal"),
-        closeBtn = document.querySelector(".close-btn");
-      showBtn.addEventListener("click", () => section.classList.add("active"));
-      overlay.addEventListener("click", () =>
-        section.classList.remove("active")
-      );
-      closeBtn.addEventListener("click", () =>
-        section.classList.remove("active")
-      );
+      const logoutPopup = document.querySelector(".logout-popup");
+      const logoutBtn = document.querySelector(".logout");
+      const overlay = document.querySelector(".logout-popup .overlay");
+      const closeBtn = document.querySelector(".logout-popup .close-btn");
+
+      function showLogoutConfirmation() {
+        logoutPopup.classList.add("active");
+      }
+
+      function closeLogoutPopup() {
+        logoutPopup.classList.remove("active");
+      }
+
+      function logout() {
+        alert("Logout berhasil!");
+        window.location.href = "../../login-admin/login.php";
+      }
     </script>
   </body>
 </html>

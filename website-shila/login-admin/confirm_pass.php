@@ -13,7 +13,7 @@
 
 <div class="login-container">
     <div class="logo-container">
-        <img src="../img/tentang-kami.png" width="200px" alt="Mitra Pemesanan Kue Logo" class="logo">
+        <img src="../company-profile/image/tentang-kami.png" width="200px" alt="Mitra Pemesanan Kue Logo" class="logo">
     </div>
 
     <form class="login-form" method="post" action="">
