@@ -1,8 +1,7 @@
 <?php
 /*
     catatan:
-    terdapat 2 login dengan GET dan POST
-    sisanya
+    -login dengan post
     -show user pada GET
     -tambah user / register pada POST
     -edit data user pada PUT
@@ -22,32 +21,6 @@ if (isset($_GET['action'])){
 
     switch ($request_method){
         case 'GET' :
-            //untuk login
-            /*
-                penggunaan postman
-                method = GET
-                url = http://localhost/a/project/API/api_users.php?
-                    action=login
-                    &user_email=admin@gmail.com ($valEmail)
-                    &user_password=123 ($valPass)
-            */
-            if ($action == 'login') {
-                $valEmail = $_GET['user_email'];
-                $valPass = $_GET['user_password'];
-
-                $query = "SELECT * FROM user WHERE user_email = '$valEmail' AND user_password = $valPass";
-                $result = $koneksi -> query($query);
-
-                if ($result) {
-                    $hasil = $result -> fetch_all(MYSQLI_ASSOC);
-                    echo json_encode($hasil);
-                } else {
-                    http_response_code(500);
-                    echo json_encode(array("message" => "Error retrieving data"));
-                }
-                break;
-            }
-
             //menampilkan data dari tabel users (daftar pelanggan users bukan admin)
             /*
                 penggunaan postman
@@ -84,22 +57,36 @@ if (isset($_GET['action'])){
                 $valEmail = $_POST['user_email'];
                 $valPass = $_POST['user_password'];
 
-                $query = "SELECT * FROM user WHERE user_email = '$valEmail' AND user_password = $valPass";
+                $query = "SELECT * FROM user WHERE user_email = '".$valEmail."' AND user_password = '".$valPass."' AND id_level = 1";
                 $result = $koneksi -> query($query);
 
                 if ($result) {
-                    $hasil = $result -> fetch_all(MYSQLI_ASSOC);
-                    $response = array(
-                        'code' => 200,
-                        'status' => 'sukses',
-                        'data' => $hasil
-                    );
-                    echo json_encode($response);
+                    if ($result->num_rows > 0) {
+                        $hasil = $result->fetch_all(MYSQLI_ASSOC);
+                        $response = array(
+                            'code' => 200,
+                            'status' => 'sukses',
+                            'data' => $hasil
+                        );
+                        echo json_encode($response);
+                    } else {
+                        // Incorrect password or user not found
+                        http_response_code(401);
+                        $response = array(
+                            'code' => 401,
+                            'status' => 'gagal',
+                            'message' => 'Email or password is incorrect',
+                            'data' => array()
+                        );
+                        echo json_encode($response);
+                    }
                 } else {
+                    // Database query error
                     http_response_code(500);
                     $response = array(
                         'code' => 500,
                         'status' => 'gagal',
+                        'message' => 'Internal Server Error',
                         'data' => array()
                     );
                     echo json_encode($response);
