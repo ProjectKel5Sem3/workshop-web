@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="form-group">
-        <a href="confirm_pass.php" class="forgot-password">Lupa Password?</a>
+        <a href="lupa_pass.php" class="forgot-password">Lupa Password?</a>
     </div>
         <div class="form-group">
             <button type="submit">Login</button>
