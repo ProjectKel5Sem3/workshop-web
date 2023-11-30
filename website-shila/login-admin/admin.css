@@ -1,0 +1,127 @@
+/* login, lupa pass, confirm pass */
+body {
+  background-color: #f7ead4;
+  font-family: "poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  text-align: left;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-container .logo {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.login-container h2 {
+  color: #6b5048;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.login-form {
+  margin-top: 60px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.form-group input {
+  width: 80%;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 50px;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-input-container input {
+  padding-right: 30px;
+}
+
+.toggle-password {
+  position: absolute;
+  bottom: 3px;
+  right: 60px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.forgot-password {
+  font-size: 15px;
+  color: #215fff;
+  text-decoration: none;
+  display: inline-block;
+  margin-left: 325px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.form-group button {
+  display: block;
+  margin: 0 auto;
+  background-color: #6b5048;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 30px;
+  padding: 15px;
+  width: 80%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-group button:hover {
+  background-color: #9e786c;
+}
+
+/* Responsive mobile */
+@media (max-width: 600px) {
+  .login-container {
+    font-size: 15px;
+    width: 80%;
+    height: 90vh;
+  }
+
+  .login-container .logo {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .forgot-password {
+    width: 100%;
+    margin-left: 250px;
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan</title>
+
+    <!-- Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+    />
+
+    <!-- CSS file -->
+    <link rel="stylesheet" href="../logout/logout.css" />
+    <link rel="stylesheet" href="../dashboard/styles.css" />
+    <link rel="stylesheet" href="../laporan/laporan.css" />
+    <style>
+      @media only screen and (max-width: 768px) {
+        .sidebar {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .side-menu {
+          margin-top: 20px;
+        }
+
+        .logout {
+          margin-top: 20px;
+        }
+
+        .content {
+          margin-left: 0;
+        }
+
+        main h2 {
+          margin-right: 20px;
+        }
+
+        .filter-minggu {
+          margin-left: 20px;
+        }
+
+        .filter-bulan {
+          margin-left: 20px;
+          margin-top: 10px;
+        }
+
+        .filter-bulan input,
+        .filter-minggu input {
+          width: 100%;
+        }
+
+        .container {
+          grid-template-columns: 1fr;
+          padding-bottom: 100px;
+        }
+
+        th,
+        td {
+          padding: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="sidebar">
+      <a href="#" class="logo">
+        <img src="../img/logo.png" alt="logo" width="40px" />
+        <span class="text">ViosCake</span>
+      </a>
+
+      <ul class="side-menu top">
+        <li class="">
+          <a href="../dashboard/dashboard.html" class="nav-link">
+            <i class="ri-home-3-fill"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="../katalog/katalog.html" class="nav-link">
+            <i class="ri-image-2-fill"></i>
+            <span class="text">Katalog</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="../pesanan/pesanan.html" class="nav-link">
+            <i class="ri-list-unordered"></i>
+            <span class="text">Pesanan</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="../laporan/laporan.html" class="nav-link">
+            <i class="ri-book-2-fill"></i>
+            <span class="text">Laporan</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="side-menu">
+        <li>
+          <a href="#" class="logout" onclick="showLogoutConfirmation()">
+            <i class="fas fa-right-from-bracket"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="content">
+      <nav>
+        <i class="fas fa-bars menu-btn"></i>
+
+        <a href="#" class="profile">
+          <img src="../img/profile.jpg" alt="" />
+        </a>
+      </nav>
+
+      <!-- ===== ISI KONTEN LAPORAN ===== -->
+
+      <main>
+        <!-- Filter per Minggu -->
+        <div class="filter-minggu">
+          <label for="weeklyFilter">Minggu</label>
+          <input type="text" id="weeklyFilter" />
+        </div>
+
+        <!-- Filter per Bulan -->
+        <div class="filter-bulan">
+          <label for="monthlyFilter">Bulan</label>
+          <input type="text" id="monthlyFilter" />
+          <i class="fas fa-filter"></i>
+        </div>
+        <div class="container">
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th class="no">No.</th>
+                  <th>Nama Pembeli</th>
+                  <th>Ukuran Cake</th>
+                  <th>Tanggal Pesan</th>
+                  <th>Total Harga</th>
+                  <th class="status">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Shila Afifah</td>
+                  <td>Medium</td>
+                  <td>2023-11-30</td>
+                  <td>RP. 50.000</td>
+                  <td>Selesai</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Afifah Shila</td>
+                  <td>Large</td>
+                  <td>2023-12-05</td>
+                  <td>RP. 80.000</td>
+                  <td>Proses</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="btn-unduh">
+          <button>
+            Unduh Report
+            <i class="ri-arrow-down-fill"></i>
+          </button>
+        </div>
+      </main>
+    </section>
+
+    <section class="logout-popup">
+      <span class="overlay"></span>
+      <div class="modal-box">
+        <i class="fas fa-right-from-bracket"></i>
+        <h3>Apakah anda yakin ingin logout?</h3>
+        <div class="buttons">
+          <button onclick="logout()">Logout</button>
+          <button class="close-btn" onclick="closeLogoutPopup()">Batal</button>
+        </div>
+      </div>
+    </section>
+    <script>
+      const logoutPopup = document.querySelector(".logout-popup");
+      const logoutBtn = document.querySelector(".logout");
+      const overlay = document.querySelector(".logout-popup .overlay");
+      const closeBtn = document.querySelector(".logout-popup .close-btn");
+
+      function showLogoutConfirmation() {
+        logoutPopup.classList.add("active");
+      }
+
+      function closeLogoutPopup() {
+        logoutPopup.classList.remove("active");
+      }
+
+      function logout() {
+        alert("Logout berhasil!");
+      }
+    </script>
+
+    <script src="../dashboard/app.js"></script>
+  </body>
+</html>

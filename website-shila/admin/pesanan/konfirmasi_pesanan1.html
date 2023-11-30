@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pesanan</title>
+
+    <!-- Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+    />
+
+    <!-- CSS file -->
+    <link rel="stylesheet" href="../logout/logout.css" />
+    <link rel="stylesheet" href="../dashboard/styles.css" />
+    <link rel="stylesheet" href="../pesanan/konfirmasi_pesanan1.css" />
+  </head>
+  <body>
+    <section class="sidebar">
+      <a href="#" class="logo">
+        <img src="../img/logo.png" alt="logo" width="40px" />
+        <span class="text">ViosCake</span>
+      </a>
+
+      <ul class="side-menu top">
+        <li class="">
+          <a href="../dashboard/dashboard.html" class="nav-link">
+            <i class="ri-home-3-fill"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="../katalog/katalog.html" class="nav-link">
+            <i class="ri-image-2-fill"></i>
+            <span class="text">Katalog</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="../pesanan/pesanan.html" class="nav-link">
+            <i class="ri-list-unordered"></i>
+            <span class="text">Pesanan</span>
+          </a>
+        </li>
+        <li class="">
+          <a href="../laporan/laporan.html" class="nav-link">
+            <i class="ri-book-2-fill"></i>
+            <span class="text">Laporan</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="side-menu">
+        <li>
+          <a href="#" class="logout" onclick="showLogoutConfirmation()">
+            <i class="fas fa-right-from-bracket"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="content">
+      <nav>
+        <i class="fas fa-bars menu-btn"></i>
+
+        <a href="#" class="profile">
+          <img src="../img/profile.jpg" alt="" />
+        </a>
+      </nav>
+
+      <!-- ===== ISI KONTEN PESANAN ===== -->
+
+      <main class="container">
+        <div class="card order-card" id="order1">
+          <h3>Pesanan 1</h3>
+          <h5 class="data">
+            Nama: Shila Afifah, Base Cake: Matcha, Ukuran Cake: Birthday
+            Cake(17cm), Tambahan Topping: Lilin angka 17, Keterangan Lain: Tidak
+            Ada, Tanggal Pesanan: 1 November 2023, Harga Total: -
+            <h4>Foto Design Cake</h4>
+            <img src="../img/D17cm.png" width="80px" height="90px" alt="" />
+          </h5>
+        </div>
+
+        <div class="card confirm">
+          <h4>Masukkan Harga</h4>
+          <input
+            type="text"
+            id="hargaInput"
+            placeholder="Masukkan harga.."
+            required
+          />
+          <button onclick="showConfirmationPopup()">Konfirmasi</button>
+        </div>
+      </main>
+    </section>
+
+    <section class="confirmation-popup">
+      <span class="overlay"></span>
+      <div class="modal-box">
+        <h3>Apakah Anda yakin ingin mengkonfirmasi pesanan?</h3>
+        <div class="buttons">
+          <button onclick="konfirmasiPesanan()">Ya</button>
+          <button class="close-btn" onclick="closeConfirmationPopup()">
+            Batal
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="logout-popup">
+      <span class="overlay"></span>
+      <div class="modal-box">
+        <i class="fas fa-right-from-bracket"></i>
+        <h3>Apakah anda yakin ingin logout?</h3>
+        <div class="buttons">
+          <button onclick="logout()">Logout</button>
+          <button class="close-btn" onclick="closeLogoutPopup()">Batal</button>
+        </div>
+      </div>
+    </section>
+    <script>
+      const confirmationPopup = document.querySelector(".confirmation-popup");
+      const overlayConfirmation = document.querySelector(
+        ".confirmation-popup .overlay"
+      );
+      const closeBtnConfirmation = document.querySelector(
+        ".confirmation-popup .close-btn"
+      );
+
+      function showConfirmationPopup() {
+        confirmationPopup.classList.add("active");
+      }
+
+      function closeConfirmationPopup() {
+        confirmationPopup.classList.remove("active");
+      }
+
+      function konfirmasiPesanan() {
+        const hargaInput = document.getElementById("hargaInput").value;
+
+        if (
+          confirm(
+            "Apakah Anda yakin ingin mengkonfirmasi pesanan dengan harga: " +
+              hargaInput +
+              "?"
+          )
+        ) {
+          alert("Pesanan berhasil dikonfirmasi!");
+          window.location.href = "../pesanan/rincian_pesanan1.html";
+        } else {
+          alert("Konfirmasi pesanan dibatalkan!");
+        }
+
+        closeConfirmationPopup();
+      }
+
+      const logoutPopup = document.querySelector(".logout-popup");
+      const logoutBtn = document.querySelector(".logout");
+      const overlay = document.querySelector(".logout-popup .overlay");
+      const closeBtn = document.querySelector(".logout-popup .close-btn");
+
+      function showLogoutConfirmation() {
+        logoutPopup.classList.add("active");
+      }
+
+      function closeLogoutPopup() {
+        logoutPopup.classList.remove("active");
+      }
+
+      function logout() {
+        alert("Logout berhasil!");
+      }
+    </script>
+
+    <script src="../dashboard/app.js"></script>
+    <script src="pesanan.js"></script>
+  </body>
+</html>

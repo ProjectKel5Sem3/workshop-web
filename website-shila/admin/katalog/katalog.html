@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard ViosCake</title>
+
+    <!-- Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+    />
+
+    <!-- CSS file -->
+    <link rel="stylesheet" href="../logout/logout.css" />
+    <link rel="stylesheet" href="../katalog/../dashboard/styles.css" />
+    <link rel="stylesheet" href="../katalog/katalog.css" />
+  </head>
+  <body>
+    <section class="sidebar">
+      <a href="#" class="logo">
+        <img src="../img/logo.png" alt="logo" width="40px" />
+        <span class="text">ViosCake</span>
+      </a>
+
+      <ul class="side-menu top">
+        <li class="">
+          <a href="../dashboard/dashboard.html" class="nav-link">
+            <i class="ri-home-3-fill"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="../katalog/katalog.html" class="nav-link">
+            <i class="ri-image-2-fill"></i>
+            <span class="text">Katalog</span>
+          </a>
+        </li>
+        <li>
+          <a href="../pesanan/pesanan.html" class="nav-link">
+            <i class="ri-list-unordered"></i>
+            <span class="text">Pesanan</span>
+          </a>
+        </li>
+        <li>
+          <a href="../laporan/laporan.html" class="nav-link">
+            <i class="ri-book-2-fill"></i>
+            <span class="text">Laporan</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="side-menu">
+        <li>
+          <a href="#" class="logout" onclick="showLogoutConfirmation()">
+            <i class="fas fa-right-from-bracket"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== ISI KONTEN KATALOG ===== -->
+    <section class="content">
+      <nav>
+        <i class="fas fa-bars menu-btn"></i>
+
+        <a href="#" class="profile">
+          <img src="../img/profile.jpg" alt="" />
+        </a>
+      </nav>
+
+      <main>
+        <div class="image-actions">
+          <button class="action-btn edit-btn" onclick="toggleEdit()">
+            Edit
+          </button>
+          <button
+            class="action-btn delete-btn"
+            onclick="deleteSelectedImages()"
+          >
+            Hapus
+          </button>
+          <button class="action-btn add-btn" onclick="addNewCatalog()">
+            Tambah Katalog
+          </button>
+        </div>
+        <div id="newCatalogForm" style="display: none">
+          <form onsubmit="addCatalogFromForm(event)">
+            <label for="catalogTitle">Title:</label>
+            <input type="text" id="catalogTitle" name="catalogTitle" required />
+
+            <label for="catalogImage">Choose Image:</label>
+            <input
+              type="file"
+              id="catalogImage"
+              name="catalogImage"
+              accept="image/*"
+              required
+            />
+
+            <img
+              id="previewImage"
+              src="#"
+              alt="Preview Image"
+              style="display: none; max-width: 100%"
+            />
+
+            <button type="submit">Add Catalog</button>
+          </form>
+        </div>
+
+        <div class="gallery">
+          <div class="album selectable" onclick="selectImage(this)">
+            <a href="priceList.html">
+              <img src="../img/priceList1.png" alt="Album 1" />
+            </a>
+            <div class="caption">
+              <p class="category">Price List</p>
+            </div>
+          </div>
+
+          <div class="album selectable" onclick="selectImage(this)">
+            <a href="baseCake.html">
+              <img src="../img/D21cm.png" alt="Album 2" />
+            </a>
+            <div class="caption">
+              <p class="category">Base Cake</p>
+            </div>
+          </div>
+
+          <div class="album selectable" onclick="selectImage(this)">
+            <a href="ukuranCake.html">
+              <img src="../img/bentoCake(10cm).png" alt="Album 3" />
+            </a>
+            <div class="caption">
+              <p class="category">Ukuran Cake</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="content"></div>
+      </main>
+    </section>
+
+    <section class="logout-popup">
+      <span class="overlay"></span>
+      <div class="modal-box">
+        <i class="fas fa-right-from-bracket"></i>
+        <h3>Apakah anda yakin ingin logout?</h3>
+        <div class="buttons">
+          <button onclick="logout()">Logout</button>
+          <button class="close-btn" onclick="closeLogoutPopup()">Batal</button>
+        </div>
+      </div>
+    </section>
+    <script>
+      function addCatalogFromForm(event) {
+        event.preventDefault();
+
+        const titleInput = document.getElementById("catalogTitle");
+        const imageInput = document.getElementById("catalogImage");
+        const previewImage = document.getElementById("previewImage");
+
+        const title = titleInput.value;
+
+        if (imageInput.files.length > 0) {
+          const selectedImage = imageInput.files[0];
+
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const imageDataUrl = e.target.result;
+
+            const newCatalog = document.createElement("div");
+            newCatalog.classList.add("album", "selectable");
+            newCatalog.onclick = function () {
+              selectImage(this);
+            };
+
+            const link = document.createElement("a");
+            link.href = "#";
+
+            const img = document.createElement("img");
+            img.src = imageDataUrl;
+            img.alt = title;
+
+            const caption = document.createElement("div");
+            caption.classList.add("caption");
+
+            const category = document.createElement("p");
+            category.classList.add("category");
+            category.innerText = title;
+
+            caption.appendChild(category);
+            link.appendChild(img);
+            newCatalog.appendChild(link);
+            newCatalog.appendChild(caption);
+
+            const gallery = document.querySelector(".gallery");
+            gallery.appendChild(newCatalog);
+
+            titleInput.value = "";
+            imageInput.value = "";
+
+            const form = document.getElementById("newCatalogForm");
+            form.style.display = "none";
+          };
+
+          reader.readAsDataURL(selectedImage);
+        }
+      }
+
+      const logoutPopup = document.querySelector(".logout-popup");
+      const logoutBtn = document.querySelector(".logout");
+      const overlay = document.querySelector(".logout-popup .overlay");
+      const closeBtn = document.querySelector(".logout-popup .close-btn");
+
+      function showLogoutConfirmation() {
+        logoutPopup.classList.add("active");
+      }
+
+      function closeLogoutPopup() {
+        logoutPopup.classList.remove("active");
+      }
+
+      function logout() {
+        alert("Logout berhasil!");
+
+        window.location.href = "../../login-admin/login.php";
+      }
+    </script>
+    <script src="../dashboard/app.js"></script>
+    <script src="../katalog/katalog.js"></script>
+  </body>
+</html>

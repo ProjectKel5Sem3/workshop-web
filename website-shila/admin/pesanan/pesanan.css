@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-around; */
+}
+
+.order-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px;
+  text-align: center;
+  max-width: 300px;
+}
+
+.order-card .wait {
+  color: #f44336;
+}
+
+.btn-rincian,
+.btn-konfirmasi {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #6b5048;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-rincian:hover,
+.btn-konfirmasi:hover {
+  background-color: #75625d;
+}
+
+@media only screen and (max-width: 600px) {
+  .order-card {
+    width: 80%;
+  }
+}

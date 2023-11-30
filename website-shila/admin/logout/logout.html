@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+    />
+
+    <!-- CSS file -->
+    <link rel="stylesheet" href="../dashboard/styles.css" />
+    <link rel="stylesheet" href="logout.css" />
+  </head>
+  <body>
+    <section>
+      <button class="show-modal">Show Modal</button>
+      <span class="overlay"></span>
+      <div class="modal-box">
+        <i class="fas fa-right-from-bracket"></i>
+        <h3>Apakah anda yakin ingin logout?</h3>
+        <div class="buttons">
+          <button>Logout</button>
+          <button class="close-btn">Batal</button>
+        </div>
+      </div>
+    </section>
+    <script>
+      const section = document.querySelector("section"),
+        overlay = document.querySelector(".overlay"),
+        showBtn = document.querySelector(".show-modal"),
+        closeBtn = document.querySelector(".close-btn");
+      showBtn.addEventListener("click", () => section.classList.add("active"));
+      overlay.addEventListener("click", () =>
+        section.classList.remove("active")
+      );
+      closeBtn.addEventListener("click", () =>
+        section.classList.remove("active")
+      );
+    </script>
+  </body>
+</html>
