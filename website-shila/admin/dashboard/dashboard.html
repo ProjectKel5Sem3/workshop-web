@@ -21,6 +21,10 @@
     <!-- CSS file -->
     <link rel="stylesheet" href="../logout/logout.css" />
     <link rel="stylesheet" href="../dashboard/styles.css" />
+
+    <!-- script -->
+    <script src="script.js" defer></script>
+
   </head>
   <body>
     <section class="sidebar">
@@ -131,24 +135,24 @@
         </div>
 
         <div class="box-info">
-          <li>
+          <li id="pesanan-baru">
             <i class="fas fa-calendar-check"></i>
             <span class="text">
-              <h3>1.5K</h3>
+              <h3 id="total-transaksi">Loading...</h3>
               <p>Pesanan Baru</p>
             </span>
           </li>
-          <li>
+          <li id="pelanggan">
             <i class="fas fa-people-group"></i>
             <span class="text">
-              <h3>1M</h3>
-              <p>Pembeli</p>
+              <h3 id="total-pelanggan">loading...</h3>
+              <p>Pelanggan</p>
             </span>
           </li>
-          <li>
+          <li id="pendapatan">
             <i class="fas fa-dollar-sign"></i>
             <span class="text">
-              <h3>500k</h3>
+              <h3 id="total-pendapatan">Loading...</h3>
               <p>Pendapatan</p>
             </span>
           </li>
@@ -162,7 +166,7 @@
               <i class="fas fa-filter"></i>
             </div>
 
-            <table>
+            <table id="transactionTable">
               <thead>
                 <tr>
                   <th>User</th>
@@ -170,47 +174,8 @@
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <img src="../dashboard/../img/profile.jpg" alt="" />
-                    <p>Shila Afifah</p>
-                  </td>
-                  <td>07-05-2023</td>
-                  <td><span class="status pending">Pending</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="../dashboard/../img/profile.jpg" alt="" />
-                    <p>Shila Afifah</p>
-                  </td>
-                  <td>07-05-2023</td>
-                  <td><span class="status pending">Pending</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="../dashboard/../img/profile.jpg" alt="" />
-                    <p>Shila Afifah</p>
-                  </td>
-                  <td>07-05-2023</td>
-                  <td><span class="status process">Process</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="../dashboard/../img/profile.jpg" alt="" />
-                    <p>Shila Afifah</p>
-                  </td>
-                  <td>07-05-2023</td>
-                  <td><span class="status process">Process</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="../dashboard/../img/profile.jpg" alt="" />
-                    <p>Shila Afifah</p>
-                  </td>
-                  <td>07-05-2023</td>
-                  <td><span class="status complete">Complete</span></td>
-                </tr>
+              <tbody id="tabel-transaksi">
+                <!-- data diambil dari api -->
               </tbody>
             </table>
           </div>
@@ -295,34 +260,5 @@
     </script>
 
     <script src="../dashboard/app.js"></script>
-    <script>
-      function saveNote() {
-        const textarea = document.querySelector(".editor textarea");
-        const noteText = textarea.value.trim();
-
-        if (noteText !== "") {
-          const savedNotesContainer = document.getElementById("savedNotes");
-          const newNoteElement = document.createElement("div");
-          newNoteElement.classList.add("saved-note");
-
-          const noteTextElement = document.createElement("span");
-          noteTextElement.textContent = noteText;
-          newNoteElement.appendChild(noteTextElement);
-
-          const deleteButton = document.createElement("button");
-          deleteButton.textContent = "Delete";
-          deleteButton.onclick = function () {
-            savedNotesContainer.removeChild(newNoteElement);
-          };
-          newNoteElement.appendChild(deleteButton);
-
-          savedNotesContainer.appendChild(newNoteElement);
-
-          textarea.value = "";
-        } else {
-          alert("Please write a note before saving.");
-        }
-      }
-    </script>
   </body>
 </html>

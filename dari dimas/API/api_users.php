@@ -21,12 +21,6 @@ if (isset($_GET['action'])){
 
     switch ($request_method){
         case 'GET' :
-            //menampilkan data dari tabel users (daftar pelanggan users bukan admin)
-            /*
-                penggunaan postman
-                method = GET
-                url = http://localhost/a/project/API/api_users.php?action=get_users
-            */
             if ($action == 'get_users') {
                 $query = "SELECT * FROM user WHERE id_level = 2 ORDER BY id_user desc;";
                 $result = $koneksi -> query($query);
@@ -39,20 +33,9 @@ if (isset($_GET['action'])){
                     echo json_encode(array("message" => "Error retrieving data"));
                 }
             } 
-            
-            break;
-                
+            break; 
 
         case 'POST' :
-            //untuk login
-            /*
-                penggunaan postman
-                method = POST
-                url = http://localhost/a/project/API/api_users.php?action=login
-                body -> form-data
-                    user_email = $valEmail
-                    user_password = $valPass
-            */
             if ($action == 'login') {
                 $valEmail = $_POST['user_email'];
                 $valPass = $_POST['user_password'];
@@ -94,16 +77,6 @@ if (isset($_GET['action'])){
                 break;
             }
 
-            //menambah data
-            //untuk register khusus mobile
-            /*
-                penggunaan postman
-                method = POST
-                url = http://localhost/a/project/API/api_users.php?action=add_users
-                body -> x-www-form-urlencode
-                    user_email = di@gmail.com ($valEmail)
-                    user_password = 111 ($valPass)
-            */
             if ($action == 'add_users') {
                 $valNama = $_POST['user_fullname'];
                 $valEmail = $_POST['user_email'];
@@ -121,19 +94,7 @@ if (isset($_GET['action'])){
             break;
 
         case 'PUT' :
-            //update data user kecuali password
-            /*
-                penggunaan postman
-                method = PUT
-                url = http://localhost/a/project/API/api_users.php?action=update_users
-                body -> x-www-form-urlencode
-                    user_email
-                    user_fullname
-                    telp
-                    alamat
-                    pict
-                    id_user
-            */
+
             if ($action == 'update_users') {
                 parse_str(file_get_contents('php://input'), $value);
                 $valId = $value['id_user'];
@@ -161,14 +122,7 @@ if (isset($_GET['action'])){
             break;
 
         case 'DELETE' :
-            //hapus data user khusus web (fitur admin)
-            /*
-                penggunaan postman
-                method = DELETE
-                url = http://localhost/a/project/API/api_users.php?action=delete_users&id_level=2
-                body -> x-www-form-urlencode
-                    id_user
-            */
+            
             if ($action == 'delete_users') {
                 if (isset($_GET['id_level'])) {
                     parse_str(file_get_contents('php://input'), $value);

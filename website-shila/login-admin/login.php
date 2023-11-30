@@ -17,20 +17,24 @@
     <div class="logo-container">
         <img src="../company-profile/image/tentang-kami.png" width="200px" alt="Mitra Pemesanan Kue Logo" class="logo">
     </div>
+
     <h2>Selamat Datang 👋</h2>
-    <form class="login-form" method="post" action="">
-    <div class="form-group">
-        <input type="text" name="your-email" id="your-email" class="input-text" placeholder="Email Address" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
-    </div>
-    <div class="form-group">
-        <input type="password" name="password" id="password" class="input-text" placeholder="Password" required>
-        <div class="password-input-container">
-            <span class="toggle-password" onclick="togglePassword()"><i class="ri-eye-fill:before"></i></span>
+
+    <form class="login-form" id="loginForm" method="post" action="">
+        
+        <div class="form-group">
+            <input type="text" name="your-email" id="your-email" class="input-text" placeholder="Email Address" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
         </div>
-    </div>
-    <div class="form-group">
-        <a href="lupa_pass.php" class="forgot-password">Lupa Password?</a>
-    </div>
+        <div class="form-group">
+            <input type="password" name="password" id="password" class="input-text" placeholder="Password" required>
+            <div class="password-input-container">
+                <span class="toggle-password" onclick="togglePassword()"><i class="ri-eye-fill:before"></i></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <a href="lupa_pass.php" class="forgot-password">Lupa Password?</a>
+        </div>
         <div class="form-group">
             <button type="submit">Login</button>
         </div>
@@ -59,9 +63,9 @@
                 if (data.code === 200) {
                     window.location.href = '../admin/dashboard/dashboard.html';
                 } else if (data.code === 401) {
-                    alert('salah')
-                } else {
-                    alert('login Gagal. Username atau password salah.');
+                    alert('login Gagal. Username atau password salah.')
+                } else if (data.code === 500) {
+                    alert('Koneksi DB Gagal');
                 }                
             })
             .catch(function(error) {
