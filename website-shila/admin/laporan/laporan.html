@@ -69,6 +69,10 @@
         }
       }
     </style>
+
+    <!-- script -->
+    <script src="script.js" defer></script>
+
   </head>
   <body>
     <section class="sidebar">
@@ -151,30 +155,15 @@
                   <th class="status">Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Shila Afifah</td>
-                  <td>Medium</td>
-                  <td>2023-11-30</td>
-                  <td>RP. 50.000</td>
-                  <td>Selesai</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Afifah Shila</td>
-                  <td>Large</td>
-                  <td>2023-12-05</td>
-                  <td>RP. 80.000</td>
-                  <td>Proses</td>
-                </tr>
+              <tbody id="tabel-laporan">
+                
               </tbody>
             </table>
           </div>
         </div>
 
         <div class="btn-unduh">
-          <button>
+          <button id="unduhButton">
             Unduh Report
             <i class="ri-arrow-down-fill"></i>
           </button>

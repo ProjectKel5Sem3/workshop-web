@@ -14,26 +14,28 @@ if (isset($_GET['action'])){
             if ($action == 'transaksi') {
                 $query = "SELECT * FROM transaksi ORDER BY id_transaksi DESC";
                 $result = $koneksi->query($query);
-
+            
                 if ($result) {
                     $transactions = $result->fetch_all(MYSQLI_ASSOC);
-
-                    // Filter transactions for today
-                    $today = date('Y-m-d');
-                    $transactionsToday = array_filter($transactions, function ($transaction) use ($today) {
-                        return strpos($transaction['waktu'], $today) !== false;
+            
+                    // Filter transactions for the last week
+                    $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
+                    $transactionsLastWeek = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
+                        return $transaction['waktu'] >= $oneWeekAgo;
                     });
-
-                    echo json_encode($transactionsToday);
+            
+                    echo json_encode($transactionsLastWeek);
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message"=>"error"));
                 }
                 break;
             }
+            
 
             if ($action == 'pelanggan') {
-                $query = "SELECT `id`, `user_email`, `user_fullname`, `telp`, `alamat`, `pict`, `tanggal_gabung`, `id_level` FROM `user` WHERE id_level = 2 ORDER BY tanggal_gabung DESC";
+                $query = "SELECT `id`, `user_email`, `user_fullname`, `telp`, `alamat`, `pict`, `tanggal_gabung`, `id_level` 
+                            FROM `user` WHERE id_level = 2 ORDER BY tanggal_gabung DESC";
                 $result = $koneksi->query($query);
 
                 if ($result) {
@@ -49,33 +51,57 @@ if (isset($_GET['action'])){
             if ($action == 'pendapatan') {
                 $query = "SELECT * FROM `transaksi`";
                 $result = $koneksi->query($query);
-
+            
                 if ($result) {
-                    $users = $result -> fetch_all(MYSQLI_ASSOC);
-                    echo json_encode($users);
+                    $transactions = $result->fetch_all(MYSQLI_ASSOC);
+            
+                    // Filter transactions for a specific date range (example: last 7 days)
+                    $startDate = date('Y-m-d', strtotime('-7 days'));
+                    $endDate = date('Y-m-d');
+                    
+                    $filteredTransactions = array_filter($transactions, function ($transaction) use ($startDate, $endDate) {
+                        return $transaction['waktu'] >= $startDate && $transaction['waktu'] <= $endDate;
+                    });
+            
+                    echo json_encode($filteredTransactions);
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message" => "Error retrieving data"));
                 } 
                 break;
             }
+            
 
             if ($action == 'tabel_transaksi') {
-                $query = "SELECT user.user_fullname, user.pict, transaksi.waktu, transaksi.status FROM user JOIN transaksi ON user.id = transaksi.id_user";
+                $query = "SELECT 
+                            user.user_fullname, 
+                            user.pict, 
+                            transaksi.waktu,
+                            transaksi.status 
+                            FROM user 
+                            JOIN transaksi ON user.id = transaksi.id_user";
                 $result = $koneksi->query($query);
             
                 if ($result) {
                     $transactions = $result->fetch_all(MYSQLI_ASSOC);
-                    echo json_encode($transactions);
+            
+                    // Filter transactions for the last week
+                    $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
+                    $filteredTransactions = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
+                        return $transaction['waktu'] >= $oneWeekAgo;
+                    });
+            
+                    echo json_encode($filteredTransactions);
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message" => "Error retrieving data"));
                 }
                 break;
             }
+            
 
             if ($action == 'note_read') {
-                $query = "SELECT * FROM catatan";
+                $query = "SELECT * FROM catatan ORDER BY id_catatan DESC";
                 $result = $koneksi->query($query);
             
                 if ($result) {
@@ -92,36 +118,42 @@ if (isset($_GET['action'])){
 
         case 'POST' :
             if ($action == 'note_write') {
-                $valCatatan = $_POST['catatan'];
-
-                $query = "INSERT INTO `catatan` (`id_catatan`, `catatan`) VALUES (NULL, '$valCatatan')";
-
+                $valCatatan = isset($_POST['catatan']) ? $_POST['catatan'] : '';
+            
                 if (empty($valCatatan)) {
                     http_response_code(400); // Bad Request
                     echo json_encode(array("message" => "Catatan cannot be empty"));
                     exit;
                 }
-                $query = "INSERT INTO `catatan` (`id_catatan`, `catatan`) VALUES (NULL, '$valCatatan')";
-
-                if ($koneksi->query($query)) {
-                    echo json_encode(array("message" => "Note added successfully"));
-                } else {
+            
+                try {
+                    // Gunakan parameter prepare statement untuk keamanan tambahan
+                    $stmt = $koneksi->prepare("INSERT INTO `catatan` (`id_catatan`, `catatan`) VALUES (NULL, ?)");
+                    $stmt->bind_param("s", $valCatatan);
+            
+                    if ($stmt->execute()) {
+                        echo json_encode(array("message" => "Note added successfully"));
+                    } else {
+                        http_response_code(500);
+                        echo json_encode(array("message" => "Error adding note"));
+                    }
+            
+                    $stmt->close();
+                } catch (Exception $e) {
                     http_response_code(500);
-                    echo json_encode(array("message" => "Error adding note"));
+                    echo json_encode(array("message" => "Error: " . $e->getMessage()));
                 }
+                break;
             }
 
-            break;
-
-        case 'DELETE' :
             if ($action == 'note_delete') {
-                if(isset($_GET['catatan'])) {
-                    $valCatatan = $_GET['catatan'];
-            
+                // Menerima data dari body permintaan dalam format x-www-form-urlencoded
+                $valCatatan = $_POST['catatan'];
+        
+                if (!empty($valCatatan)) {
                     $query = "DELETE FROM catatan WHERE catatan = '$valCatatan'";
-                    $result = $koneksi->query($query);
-            
-                    if ($result) {
+                    
+                    if ($koneksi->query($query)) {
                         echo json_encode(array("message" => "Note deleted successfully"));
                     } else {
                         http_response_code(500);
@@ -129,12 +161,11 @@ if (isset($_GET['action'])){
                     }
                 } else {
                     http_response_code(400);
-                    echo json_encode(array("message" => "ID parameter is missing"));
+                    echo json_encode(array("message" => "Catatan parameter is missing"));
                 }
-            }
+            }            
 
             break;
-
 
         default:
             //metode http tidak didukung

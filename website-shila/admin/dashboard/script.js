@@ -3,16 +3,21 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=transaksi')
     .then(response => response.json())
     .then(data => {
-        // Filter transactions for today
-        const today = new Date().toISOString().split('T')[0];
-        const transactionsToday = data.filter(transaction => transaction.waktu.includes(today));
+        // Menghitung tanggal satu minggu yang lalu
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        const oneWeekAgoISO = oneWeekAgo.toISOString().split('T')[0];
+
+        // Filter transactions for the last week
+        const transactionsLastWeek = data.filter(transaction => transaction.waktu >= oneWeekAgoISO);
 
         // Update the total transactions count on the page
-        document.getElementById('total-transaksi').innerText = transactionsToday.length + " pesanan";
+        document.getElementById('total-transaksi').innerText = transactionsLastWeek.length + " pesanan";
     })
     .catch(error => console.error('Error fetching data:', error));
 });
 
+// pelanggan
 document.addEventListener('DOMContentLoaded', function() {
     //api conect
     fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=pelanggan')
@@ -24,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => console.error('Error fetching data:', error));
 });
 
-
+// pendapatan
 fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=pendapatan')
     .then(response => response.json())
     .then(data => {
@@ -39,6 +44,7 @@ fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.
 })
 .catch(error => console.error('Error fetching data:', error));
 
+// tabel transaksi
 fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=tabel_transaksi')
     .then(response => response.json())
     .then(data => {
@@ -60,42 +66,76 @@ fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.
     })
 .catch(error => console.error('Error fetching data:', error));
 
+// note catatan
+document.addEventListener("DOMContentLoaded", function() {
+    // Fetch and display existing notes on page load
+    fetchNotes();
 
+    // Set up an event listener for the "Save" button
+    // document.querySelector(".editor button").addEventListener("click", saveNote);
+});
 
-// function saveNote() {
-//     const textarea = document.querySelector(".editor textarea");
-//     const noteText = textarea.value.trim();
+async function fetchNotes() {
+    try {
+        const responseRead = await fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=note_read');
+        const data = await responseRead.json();
 
-//     if (noteText !== "") {
-//         const savedNotesContainer = document.getElementById("savedNotes");
-//         const newNoteElement = document.createElement("div");
-//         newNoteElement.classList.add("saved-note");
+        // Update the displayed notes
+        const savedNotesContainer = document.getElementById("savedNotes");
+        savedNotesContainer.innerHTML = "";
 
-//         const noteTextElement = document.createElement("span");
-//         noteTextElement.textContent = noteText;
-//         newNoteElement.appendChild(noteTextElement);
+        data.forEach(note => {
+            const newNoteElement = document.createElement("div");
+            newNoteElement.classList.add("saved-note");
 
-//         const deleteButton = document.createElement("button");
-//         deleteButton.textContent = "Delete";
-//         deleteButton.onclick = function () {
-//         savedNotesContainer.removeChild(newNoteElement);
-//         };
-//         newNoteElement.appendChild(deleteButton);
+            const noteIDElement = document.createElement("span");
+            noteIDElement.textContent = note.id_catatan;
+            newNoteElement.appendChild(noteIDElement);
 
-//         savedNotesContainer.appendChild(newNoteElement);
+            const noteTextElement = document.createElement("span");
+            noteTextElement.textContent = note.catatan;
+            newNoteElement.appendChild(noteTextElement);
 
-//         textarea.value = "";
-//     } else {
-//         alert("Please write a note before saving.");
-//     }
-//     }
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.onclick = async function () {
+                try {
+                    const responseDelete = await fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=note_delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'catatan=' + encodeURIComponent(note.catatan),
+                    });
+            
+                    if (!responseDelete.ok) {
+                        throw new Error('Error deleting note');
+                    }
+            
+                    // Remove the entire note element when the Delete button is clicked
+                    savedNotesContainer.removeChild(newNoteElement);
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to delete note.');
+                }
+            };
+
+            newNoteElement.appendChild(deleteButton);
+
+            savedNotesContainer.appendChild(newNoteElement);
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to fetch notes.');
+    }
+}
+
 
 async function saveNote() {
     const textarea = document.querySelector(".editor textarea");
     const noteText = textarea.value.trim();
 
     if (noteText !== "") {
-        // Make a POST request to the note_write API endpoint
         try {
             const responseWrite = await fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=note_write', {
                 method: 'POST',
@@ -109,40 +149,8 @@ async function saveNote() {
                 throw new Error('Error writing note');
             }
 
-            // Make a GET request to the note_read API endpoint
-            const responseRead = await fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=note_read');
-            const data = await responseRead.json();
-
-            // Update the displayed notes
-            const savedNotesContainer = document.getElementById("savedNotes");
-            savedNotesContainer.innerHTML = "";
-
-            data.forEach(note => {
-                const newNoteElement = document.createElement("div");
-                newNoteElement.classList.add("saved-note");
-
-                const noteTextElement = document.createElement("span");
-                noteTextElement.textContent = note.catatan;
-                newNoteElement.appendChild(noteTextElement);
-
-                const deleteButton = document.createElement("button");
-                deleteButton.textContent = "Delete";
-                deleteButton.onclick = async function () {
-                    // Make a DELETE request to the note_delete API endpoint based on content
-                    const responseDelete = await fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=note_delete&catatan=' + encodeURIComponent(note.catatan), {
-                        method: 'DELETE',
-                    });
-
-                    if (!responseDelete.ok) {
-                        throw new Error('Error deleting note');
-                    }
-
-                    savedNotesContainer.removeChild(newNoteElement);
-                };
-                newNoteElement.appendChild(deleteButton);
-
-                savedNotesContainer.appendChild(newNoteElement);
-            });
+            // Fetch and display updated notes after saving
+            fetchNotes();
 
             textarea.value = "";
         } catch (error) {

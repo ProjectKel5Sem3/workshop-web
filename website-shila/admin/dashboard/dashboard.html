@@ -181,25 +181,25 @@
           </div>
 
           <!-- NOTES -->
-          <div class="notes">
-            <div class="head">
-              <h3>Notes</h3>
-              <!-- <i class="fas fa-plus"></i> icon tambah -->
-              <a href="#text">
-                <i class="ri-pencil-fill"></i>
-              </a>
-              <!-- <i class="fas fa-filter"></i> icon filter -->
+          <body>
+            <div class="notes">
+                <div class="head">
+                    <h3>Notes</h3>
+                    <a href="#text">
+                        <i class="ri-pencil-fill"></i>
+                    </a>
+                </div>
+        
+                <div class="editor">
+                    <textarea placeholder="Write your note here..." id="text"></textarea>
+                    <button onclick="saveNote()">Save</button>
+                </div>
+        
+                <div class="saved-notes" id="savedNotes">
+                    <!-- Displayed notes will appear here -->
+                </div>
             </div>
-
-            <div class="editor">
-              <textarea
-                placeholder="Write your note here..."
-                id="text"
-              ></textarea>
-              <button onclick="saveNote()">Save</button>
-            </div>
-
-            <div class="saved-notes" id="savedNotes"></div>
+            
 
             <!-- <ul class="todo-list">
               <li class="not-completed">
@@ -261,4 +261,5 @@
 
     <script src="../dashboard/app.js"></script>
   </body>
+
 </html>
