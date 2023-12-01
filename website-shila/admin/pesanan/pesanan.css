@@ -37,6 +37,15 @@ nav {
   max-width: 300px;
 }
 
+.order-card .nama0 {
+  color: orange;
+}
+
+.order-card .pictDesain {
+  width: 80px;
+  height: 90px;
+}
+
 .order-card .wait {
   color: #f44336;
 }

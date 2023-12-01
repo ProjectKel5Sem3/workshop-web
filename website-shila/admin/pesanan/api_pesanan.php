@@ -27,12 +27,18 @@ if (isset($_GET['action'])){
                 } 
                 break;
             }
+            break;
+
+        case 'POST' :
 
             if ($action == 'rincian') {
-                $query = "SELECT
+                $valIdTransaksi = $_POST['id'];
+                    $query = "SELECT
+                            transaksi.id_transaksi as id,
                             user.user_fullname as nama,
                             basecake.basecake as base,
                             ukuran_cake.ukuran as ukuran,
+                            ukuran_cake.jenis as jenis,
                             toping.topping as toping,
                             transaksi.keterangan as ket,
                             transaksi.waktu as waktu,
@@ -46,7 +52,8 @@ if (isset($_GET['action'])){
                             JOIN ukuran_cake ON detailharga_ukurandanbasecake.id_uk = ukuran_cake.id_ukuran
                             JOIN basecake ON detailharga_ukurandanbasecake.id_ba = basecake.id_basecake
                             JOIN toping ON transaksi_detail.id_topping = toping.id_topping
-                            JOIN desain ON transaksi_detail.id_desain = desain.id_desain";
+                            JOIN desain ON transaksi_detail.id_desain = desain.id_desain
+                            WHERE transaksi.id_transaksi = $valIdTransaksi";
 
                 $result = $koneksi->query($query);
 
@@ -59,7 +66,6 @@ if (isset($_GET['action'])){
                 }
                 break;
             }
-
 
             break;
 

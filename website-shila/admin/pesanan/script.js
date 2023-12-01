@@ -50,13 +50,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                 orderStatusValue.textContent = transaksi.status;
                 orderCard.appendChild(orderStatusValue);
 
+                const rincianLink = document.createElement('a');
+                rincianLink.href = 'rincian_pesanan1.html?id=' + transaksi.id_transaksi;
+                rincianLink.classList.add('btn-rincian');
+                rincianLink.textContent = 'Rincian Pesanan';
+                orderCard.appendChild(rincianLink);
+
                 switch (transaksi.status) {
                     case 'Menunggu konfirmasi':
-                        const rincianLink1 = document.createElement('a');
-                        rincianLink1.href = 'rincian_pesanan1.html';
-                        rincianLink1.classList.add('btn-rincian');
-                        rincianLink1.textContent = 'Rincian Pesanan';
-                        orderCard.appendChild(rincianLink1);
                 
                         const konfirmasiLink = document.createElement('a');
                         konfirmasiLink.href = 'konfirmasi_pesanan1.html';
@@ -67,13 +68,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         break;
 
                     case 'menunggu pembayaran':
-                        const rincianLink2 = document.createElement('a');
-                        rincianLink2.href = 'rincian_pesanan1.html';
-                        rincianLink2.classList.add('btn-rincian');
-                        rincianLink2.textContent = 'Rincian Pesanan';
-                        orderCard.appendChild(rincianLink2);
-                        break;
-
+                        // kosong
                     default:
                         // Penanganan default jika diperlukan
                         break;
@@ -88,3 +83,4 @@ document.addEventListener('DOMContentLoaded', async function() {
         alert('Failed to fetch order data.');
     }
 });
+
