@@ -3,6 +3,21 @@ body {
   font-family: Arial, sans-serif;
 }
 
+nav {
+  display: flex;
+  margin-top: 20px;
+}
+.icon-container {
+  display: flex;
+  flex-direction: column;
+}
+.icon-container .fas {
+  margin: 5px;
+}
+.icon-container .ri-arrow-left-line {
+  font-size: 24px;
+}
+
 .container {
   display: flex;
   flex-direction: column;

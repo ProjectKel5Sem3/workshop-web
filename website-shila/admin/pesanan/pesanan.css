@@ -9,7 +9,25 @@ main {
   /* justify-content: space-around; */
 }
 
+nav {
+  display: flex;
+  margin-top: 20px;
+}
+.icon-container {
+  display: flex;
+  flex-direction: column;
+}
+.icon-container .fas {
+  margin: 5px;
+}
+.icon-container .ri-arrow-left-line {
+  font-size: 24px;
+}
+
+
 .order-card {
+  width: 280px;
+  /* height: 310px; */
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

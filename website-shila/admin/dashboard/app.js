@@ -40,6 +40,7 @@ searchBtn.addEventListener("click", (e) => {
   }
 });
 
+
 window.addEventListener("resize", () => {
   if (window.innerWidth > 576) {
     searchIcon.classList.replace("fa-times", "fa-search");
@@ -53,3 +54,25 @@ window.addEventListener("resize", () => {
 if (window.innerWidth < 768) {
   sideBar.classList.add("hide");
 }
+
+let timeout;
+
+function startSessionTimeout() {
+    timeout = setTimeout(function() {
+        // Redirect ke halaman login setelah 30 menit tanpa aktivitas
+        window.location.href = "../../login-admin/login.php";
+    }, 30 * 60 * 1000); // 30 menit dalam milidetik
+}
+
+function resetSessionTimeout() {
+    clearTimeout(timeout);
+    startSessionTimeout();
+}
+
+// Panggil resetSessionTimeout setiap kali ada aktivitas di halaman
+document.addEventListener('mousemove', resetSessionTimeout);
+document.addEventListener('keypress', resetSessionTimeout);
+
+// Mulai hitung mundur pada saat halaman dimuat
+startSessionTimeout();
+

@@ -3,16 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=transaksi')
     .then(response => response.json())
     .then(data => {
-        // Menghitung tanggal satu minggu yang lalu
-        const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-        const oneWeekAgoISO = oneWeekAgo.toISOString().split('T')[0];
-
-        // Filter transactions for the last week
-        const transactionsLastWeek = data.filter(transaction => transaction.waktu >= oneWeekAgoISO);
-
         // Update the total transactions count on the page
-        document.getElementById('total-transaksi').innerText = transactionsLastWeek.length + " pesanan";
+        document.getElementById('total-transaksi').innerText = data.length + " pesanan";
     })
     .catch(error => console.error('Error fetching data:', error));
 });
@@ -126,7 +118,7 @@ async function fetchNotes() {
         });
     } catch (error) {
         console.error('Error:', error);
-        alert('Failed to fetch notes.');
+        alert('Gagal Mengambil Data');
     }
 }
 
