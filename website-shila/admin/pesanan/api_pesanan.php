@@ -44,6 +44,7 @@ if (isset($_GET['action'])){
                             transaksi.waktu as waktu,
                             transaksi.total as harga,
                             desain.gambar as pict,
+                            SUM(detailharga_ukurandanbasecake.harga) + SUM(toping.harga*2) as subtotal,
                             transaksi.status as status
                             FROM user
                             JOIN transaksi ON user.id = transaksi.id_user
@@ -63,6 +64,24 @@ if (isset($_GET['action'])){
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message" => "Error retrieving data"));
+                }
+                break;
+            }
+
+            if ($action == 'konfirm') {
+
+                $valIdTransaksi = $_POST['id'];
+                $valTotal = $_POST['total'];
+
+                $query =  "UPDATE `transaksi` SET `total`='$valTotal',`status`='menunggu pembayaran' WHERE id_transaksi = $valIdTransaksi";
+
+                $result = $koneksi->query($query);
+
+                if ($result === TRUE) {
+                    echo json_encode(array("message" => "Update successful"));
+                } else {
+                    http_response_code(500);
+                    echo json_encode(array("message" => "Error updating data: " . $koneksi->error));
                 }
                 break;
             }

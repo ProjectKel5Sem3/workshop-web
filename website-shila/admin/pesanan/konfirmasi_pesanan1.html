@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="../logout/logout.css" />
     <link rel="stylesheet" href="../dashboard/styles.css" />
     <link rel="stylesheet" href="../pesanan/konfirmasi_pesanan1.css" />
+
+    <!-- script -->
+    <script src="script_konfirm.js" defer></script>
+
   </head>
   <body>
     <section class="sidebar">
@@ -69,7 +73,7 @@
     <section class="content">
       <nav>
         <div class="icon-container">
-          <i class="fas fa-bars menu-btn2"></i>
+          <i class="fas fa-bars menu-btn"></i>
           <a href="pesanan.html">
             <i class="ri-arrow-left-line"></i>
           </a>
@@ -80,36 +84,86 @@
 
       <main class="container">
         <div class="card order-card" id="order1">
-          <h3>Pesanan 1</h3>
-          <h5 class="data">
-            Nama: Shila Afifah, Base Cake: Matcha, Ukuran Cake: Birthday
-            Cake(17cm), Tambahan Topping: Lilin angka 17, Keterangan Lain: Tidak
-            Ada, Tanggal Pesanan: 1 November 2023, Harga Total: -
-            <h4>Foto Design Cake</h4>
-            <img src="../img/D17cm.png" width="80px" height="90px" alt="" />
-          </h5>
+          <h3 id="numberPesan">loading..</h3>
+          <div class="data" style="margin-left: 20px;">
+
+            <table style="margin-bottom: 10px;">
+              <style>
+                tr td{
+                  padding-right: 10px;
+                  font-size: 13px;
+                  font-family: sans-serif;
+                }
+              </style>
+              <tr>
+                <td>Nama</td>
+                <td> : </td>
+                <td id="nama1">loading..</td>
+              </tr>
+              <tr>
+                <td>Base cake</td>
+                <td> : </td>
+                <td id="base1">loading..</td>
+              </tr>
+              <tr>
+                <td>Ukuran Cake</td>
+                <td> : </td>
+                <td id="ukuran1">loading..</td>
+              </tr>
+              <tr>
+                <td>Tambahan Toping </td>
+                <td> : </td>
+                <td id="toping1">loading..</td>
+              </tr>
+              <tr>
+                <td>Keterangan Lain</td>
+                <td> : </td>
+                <td id="ket1">loading..</td>
+              </tr>
+              <tr>
+                <td>Tanggal Pesanan</td>
+                <td> : </td>
+                <td id="tanggal1">loading..</td>
+              </tr>
+              <tr>
+                <td>Sub Total</td>
+                <td> : </td>
+                <td id="subT1">loading..</td>
+              </tr>
+            </table>
+
+            <h4 style="font-size: 13px;">Foto Design Cake</h4>
+            <img id="imgPict" width="80px" height="90px" alt="" style="margin-left: 20px;"/>
+
+          </div>
         </div>
 
         <div class="card confirm">
-          <h4>Masukkan Harga</h4>
+          <h4>Masukkan Konfirmasi Harga</h4>
           <input
-            type="text"
+            type="number"
+            min="0"
             id="hargaInput"
-            placeholder="Masukkan harga.."
+            placeholder="Masukkan harga..  Rp 0.00-"
             required
           />
           <button onclick="showConfirmationPopup()">Konfirmasi</button>
+        </div>
+
+        <div class="card k1">
+          <h4 style="display: inline;">Harga Total : </h4>
+          <h5 style="display: inline; margin-left: 30px;" id="total1"></h5>
         </div>
       </main>
     </section>
 
     <section class="confirmation-popup">
-      <span class="overlay"></span>
+      <span class="overlay" id="overlay"></span>
       <div class="modal-box">
         <h3>Apakah Anda yakin ingin mengkonfirmasi pesanan?</h3>
         <div class="buttons">
           <button onclick="konfirmasiPesanan()">Ya</button>
-          <button class="close-btn" onclick="closeConfirmationPopup()">
+          <button class="close-btn" id="close-btn" onclick="closeConfirmationPopup()">
             Batal
           </button>
         </div>
@@ -127,42 +181,44 @@
         </div>
       </div>
     </section>
+
     <script>
-      const confirmationPopup = document.querySelector(".confirmation-popup");
-      const overlayConfirmation = document.querySelector(
-        ".confirmation-popup .overlay"
-      );
-      const closeBtnConfirmation = document.querySelector(
-        ".confirmation-popup .close-btn"
-      );
-
-      function showConfirmationPopup() {
-        confirmationPopup.classList.add("active");
-      }
-
-      function closeConfirmationPopup() {
-        confirmationPopup.classList.remove("active");
-      }
-
-      function konfirmasiPesanan() {
-        const hargaInput = document.getElementById("hargaInput").value;
-
-        if (
-          confirm(
-            "Apakah Anda yakin ingin mengkonfirmasi pesanan dengan harga: " +
-              hargaInput +
-              "?"
-          )
-        ) {
-          alert("Pesanan berhasil dikonfirmasi!");
-          window.location.href = "../pesanan/rincian_pesanan1.html";
+      const hargaInput = document.getElementById("hargaInput");
+      
+      hargaInput.addEventListener("input", function() {
+        // Remove leading zeros and non-numeric characters
+        hargaInput.value = hargaInput.value.replace(/^0+|[^0-9]+/g, '');
+      
+        // Ensure the value is a non-negative number
+        const parsedValue = parseInt(hargaInput.value, 10);
+        if (isNaN(parsedValue) || parsedValue < 0) {
+          hargaInput.setCustomValidity("Masukkan angka positif.");
         } else {
-          alert("Konfirmasi pesanan dibatalkan!");
+          hargaInput.setCustomValidity("");
         }
-
-        closeConfirmationPopup();
+      });
+      
+      function konfirmasiPesanan() {
+        // Validate the input before proceeding
+        if (hargaInput.checkValidity()) {
+          const harga = hargaInput.value;
+      
+          if (confirm("Apakah Anda yakin ingin mengkonfirmasi pesanan dengan harga: Rp " + harga + "?")) {
+            // Proceed with further actions
+          } else {
+            alert("Konfirmasi pesanan dibatalkan!");
+          }
+        } else {
+          // Display validation message
+          alert("Masukkan angka positif.");
+        }
       }
+      </script>      
 
+
+    <script>
+
+      //  Log-out pop-up
       const logoutPopup = document.querySelector(".logout-popup");
       const logoutBtn = document.querySelector(".logout");
       const overlay = document.querySelector(".logout-popup .overlay");

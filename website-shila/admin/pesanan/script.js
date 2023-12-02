@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     case 'Menunggu konfirmasi':
                 
                         const konfirmasiLink = document.createElement('a');
-                        konfirmasiLink.href = 'konfirmasi_pesanan1.html';
+                        konfirmasiLink.href = 'konfirmasi_pesanan1.html?id=' + transaksi.id_transaksi;
                         konfirmasiLink.classList.add('btn-konfirmasi');
                         konfirmasiLink.textContent = 'Konfirmasi';
                         orderCard.appendChild(konfirmasiLink);

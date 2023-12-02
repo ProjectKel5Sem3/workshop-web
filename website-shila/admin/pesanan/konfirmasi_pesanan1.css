@@ -38,6 +38,11 @@ nav {
   max-width: 700px;
 }
 
+.order-card .data {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
 .order-card {
   order: -1; /* Mengatur order order-card menjadi lebih tinggi */
 }
