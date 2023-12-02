@@ -12,8 +12,22 @@ sideMenu.forEach((item) => {
 
 let menuBar = document.querySelector(".menu-btn");
 let sideBar = document.querySelector(".sidebar");
+
 menuBar.addEventListener("click", () => {
   sideBar.classList.toggle("hide");
+});
+
+window.addEventListener("resize", () => {
+  // if (window.innerWidth > 800) {
+  //   searchFrom.classList.remove("show");
+  //   searchIcon.classList.remove("fa-times");
+  //   searchIcon.classList.add("fa-search");
+  // }
+  if (window.innerWidth < 800 && !sideBar.classList.contains("hide")) {
+    sideBar.classList.add("hide");
+  } else if (window.innerWidth > 800 && sideBar.classList.contains("hide")) {
+    sideBar.classList.remove("hide");
+  }
 });
 
 // let switchMode = document.getElementById("switch-mode");
@@ -41,32 +55,21 @@ searchBtn.addEventListener("click", (e) => {
 });
 
 
-window.addEventListener("resize", () => {
-  if (window.innerWidth > 576) {
-    searchIcon.classList.replace("fa-times", "fa-search");
-    searchFrom.classList.remove("show");
-  }
-  if (window.innerWidth < 768) {
-    sideBar.classList.add("hide");
-  }
-});
-
-if (window.innerWidth < 768) {
-  sideBar.classList.add("hide");
-}
 
 let timeout;
 
 function startSessionTimeout() {
-    timeout = setTimeout(function() {
-        // Redirect ke halaman login setelah 30 menit tanpa aktivitas
-        window.location.href = "../../login-admin/login.php";
-    }, 30 * 60 * 1000); // 30 menit dalam milidetik
+  console.log('Session timeout started.');
+  timeout = setTimeout(function() {
+    // Redirect ke halaman login setelah 1 menit tanpa aktivitas
+    window.location.href = "../../login-admin/login.php";
+  }, 1 * 60 * 1000); // 1 menit dalam milidetik
 }
 
 function resetSessionTimeout() {
-    clearTimeout(timeout);
-    startSessionTimeout();
+  console.log('Activity detected. Resetting session timeout.');
+  clearTimeout(timeout);
+  startSessionTimeout();
 }
 
 // Panggil resetSessionTimeout setiap kali ada aktivitas di halaman

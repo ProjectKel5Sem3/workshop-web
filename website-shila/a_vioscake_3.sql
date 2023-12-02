@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Nov 2023 pada 12.37
+-- Waktu pembuatan: 02 Des 2023 pada 05.00
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -55,8 +55,17 @@ INSERT INTO `basecake` (`id_basecake`, `basecake`, `gambar_basecake`) VALUES
 
 CREATE TABLE `catatan` (
   `id_catatan` int(11) NOT NULL,
-  `catatan` int(11) NOT NULL
+  `catatan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `catatan`
+--
+
+INSERT INTO `catatan` (`id_catatan`, `catatan`) VALUES
+(56, 'sasda'),
+(57, 'sasda'),
+(58, 'hei anta');
 
 -- --------------------------------------------------------
 
@@ -66,18 +75,21 @@ CREATE TABLE `catatan` (
 
 CREATE TABLE `desain` (
   `id_desain` int(11) NOT NULL,
-  `desain` varchar(50) NOT NULL,
-  `jenis` enum('birthday','bento') NOT NULL,
   `gambar` text NOT NULL,
-  `harga` int(11) NOT NULL
+  `jenis` enum('birthday','bento') NOT NULL,
+  `harga` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `desain`
 --
 
-INSERT INTO `desain` (`id_desain`, `desain`, `jenis`, `gambar`, `harga`) VALUES
-(1, 'a1', 'birthday', 'asd.png', 0);
+INSERT INTO `desain` (`id_desain`, `gambar`, `jenis`, `harga`) VALUES
+(1, 'bentoCake(10cm).png', 'birthday', 0),
+(2, 'D12cm.png', 'birthday', 0),
+(3, 'D13cm.png', 'birthday', 0),
+(4, 'D17cm.png', 'birthday', 0),
+(5, 'D21cm.png', 'birthday', 0);
 
 -- --------------------------------------------------------
 
@@ -248,16 +260,20 @@ CREATE TABLE `transaksi` (
   `id_transaksi` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `waktu` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `total` int(11) NOT NULL,
-  `status` enum('Menunggu konfirmasi','menunggu pembayaran','kue dibuat','selesai') NOT NULL
+  `total` int(11) NOT NULL DEFAULT 0,
+  `status` enum('Menunggu konfirmasi','menunggu pembayaran','kue dibuat','selesai') NOT NULL,
+  `keterangan` varchar(50) NOT NULL DEFAULT 'Tidak ada'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `transaksi`
 --
 
-INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `waktu`, `total`, `status`) VALUES
-(1, 2, '2023-11-30 10:27:08', 2000, 'Menunggu konfirmasi');
+INSERT INTO `transaksi` (`id_transaksi`, `id_user`, `waktu`, `total`, `status`, `keterangan`) VALUES
+(1, 2, '2023-12-02 03:38:09', 90000, 'selesai', 'Tidak ada'),
+(2, 4, '2023-12-02 02:20:10', 200000, 'menunggu pembayaran', 'Tidak ada'),
+(3, 4, '2023-12-02 03:37:28', 0, 'Menunggu konfirmasi', 'Tidak ada'),
+(4, 2, '2023-12-02 02:10:20', 0, 'Menunggu konfirmasi', 'Tidak ada');
 
 -- --------------------------------------------------------
 
@@ -280,7 +296,10 @@ CREATE TABLE `transaksi_detail` (
 --
 
 INSERT INTO `transaksi_detail` (`id_transaksi`, `id_harga`, `id_topping`, `id_desain`, `id_user`, `subtotal`, `waktu`) VALUES
-(1, 2, 4, 1, 2, 70000, '2023-11-30 11:02:46');
+(1, 2, 4, 1, 2, 70000, '2023-11-30 11:02:46'),
+(2, 2, 2, 1, 4, 222000, '2023-12-01 00:27:56'),
+(4, 12, 10, 2, 2, 8000, '2023-12-01 23:48:34'),
+(3, 7, 13, 3, 4, 70000, '2023-12-01 23:48:34');
 
 -- --------------------------------------------------------
 
@@ -327,6 +346,7 @@ CREATE TABLE `user` (
   `telp` varchar(15) NOT NULL,
   `alamat` varchar(225) NOT NULL,
   `pict` text NOT NULL,
+  `tanggal_gabung` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `id_level` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -334,10 +354,10 @@ CREATE TABLE `user` (
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`id`, `user_email`, `user_password`, `user_fullname`, `telp`, `alamat`, `pict`, `id_level`) VALUES
-(1, 'vioscake1@gmail.com', 'vios1234', 'VIOSCAKE', '81336496191', 'Jember', '4.png', 1),
-(2, 'izzulhaqzaindimad@gmail.com', 'Qww122', 'Dimas', '085335114721', 'Situbondo', 'null', 2),
-(4, 'das@gmail.com', '1111', 'dana', '0866255144', 'Surakarta', '', 2);
+INSERT INTO `user` (`id`, `user_email`, `user_password`, `user_fullname`, `telp`, `alamat`, `pict`, `tanggal_gabung`, `id_level`) VALUES
+(1, 'vioscake1@gmail.com', 'vios1234', 'VIOSCAKE', '81336496191', 'Jember', '4.png', '2023-11-30 12:32:22', 1),
+(2, 'izzulhaqzaindimad@gmail.com', 'Qww122', 'Dimas', '085335114721', 'Situbondo', 'dimas.png', '2023-11-30 13:45:12', 2),
+(4, 'das@gmail.com', '1111', 'dana', '0866255144', 'Surakarta', 'animecuy.png', '2023-11-30 13:45:12', 2);
 
 -- --------------------------------------------------------
 
@@ -367,6 +387,12 @@ INSERT INTO `user_level` (`id_level`, `level`) VALUES
 --
 ALTER TABLE `basecake`
   ADD PRIMARY KEY (`id_basecake`);
+
+--
+-- Indeks untuk tabel `catatan`
+--
+ALTER TABLE `catatan`
+  ADD PRIMARY KEY (`id_catatan`);
 
 --
 -- Indeks untuk tabel `desain`
@@ -441,10 +467,16 @@ ALTER TABLE `basecake`
   MODIFY `id_basecake` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT untuk tabel `catatan`
+--
+ALTER TABLE `catatan`
+  MODIFY `id_catatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
+--
 -- AUTO_INCREMENT untuk tabel `desain`
 --
 ALTER TABLE `desain`
-  MODIFY `id_desain` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_desain` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `detailharga_ukurandanbasecake`
@@ -468,7 +500,7 @@ ALTER TABLE `toping`
 -- AUTO_INCREMENT untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `ukuran_cake`

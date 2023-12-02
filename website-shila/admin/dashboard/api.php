@@ -19,12 +19,12 @@ if (isset($_GET['action'])){
                     $transactions = $result->fetch_all(MYSQLI_ASSOC);
             
                     // Filter transactions for the last week
-                    $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
-                    $transactionsLastWeek = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
-                        return $transaction['waktu'] >= $oneWeekAgo;
-                    });
+                    // $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
+                    // $transactionsLastWeek = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
+                    //     return $transaction['waktu'] >= $oneWeekAgo;
+                    // });
             
-                    echo json_encode($transactionsLastWeek);
+                    echo json_encode($transactions);
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message"=>"error"));
@@ -49,21 +49,19 @@ if (isset($_GET['action'])){
             }
 
             if ($action == 'pendapatan') {
-                $query = "SELECT * FROM `transaksi`";
+                $query = "SELECT * FROM `transaksi` WHERE status = 'selesai' OR status = 'kue dibuat'";
                 $result = $koneksi->query($query);
             
                 if ($result) {
                     $transactions = $result->fetch_all(MYSQLI_ASSOC);
             
-                    // Filter transactions for a specific date range (example: last 7 days)
-                    $startDate = date('Y-m-d', strtotime('-7 days'));
-                    $endDate = date('Y-m-d');
-                    
-                    $filteredTransactions = array_filter($transactions, function ($transaction) use ($startDate, $endDate) {
-                        return $transaction['waktu'] >= $startDate && $transaction['waktu'] <= $endDate;
+                    // Filter transactions for the last week
+                    $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
+                    $transactionsLastWeek = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
+                        return $transaction['waktu'] >= $oneWeekAgo;
                     });
             
-                    echo json_encode($filteredTransactions);
+                    echo json_encode($transactionsLastWeek);
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message" => "Error retrieving data"));
