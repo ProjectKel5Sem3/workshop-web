@@ -64,7 +64,7 @@ function startSessionTimeout() {
   timeout = setTimeout(function() {
     // Redirect ke halaman login setelah 1 menit tanpa aktivitas
     window.location.href = "../../login-admin/login.php";
-  }, 1 * 60 * 1000); // 1 menit dalam milidetik
+  }, 30 * 60 * 1000); // 1 menit dalam milidetik
 }
 
 function resetSessionTimeout() {
