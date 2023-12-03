@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard ViosCake</title>
+
+    <!-- Font -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Icon -->
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+    />
+
+    <!-- CSS file -->
+    <link rel="stylesheet" href="../katalog/../dashboard/styles.css" />
+    <link rel="stylesheet" href="../katalog/katalog.css" />
+    <link rel="stylesheet" href="price.css" />
+
+</head>
+<body>
+    <section class="sidebar">
+    <a href="#" class="logo">
+        <img src="../img/logo.png" alt="logo" width="40px" />
+        <span class="text">ViosCake</span>
+    </a>
+
+    <ul class="side-menu top">
+        <li class="">
+        <a href="../dashboard/dashboard.html" class="nav-link">
+            <i class="ri-home-3-fill"></i>
+            <span class="text">Dashboard</span>
+        </a>
+        </li>
+        <li class="active">
+        <a href="../katalog/katalog.html" class="nav-link">
+            <i class="ri-image-2-fill"></i>
+            <span class="text">Katalog</span>
+        </a>
+        </li>
+        <li>
+        <a href="../pesanan/pesanan.html" class="nav-link">
+            <i class="ri-list-unordered"></i>
+            <span class="text">Pesanan</span>
+        </a>
+        </li>
+        <li>
+        <a href="../laporan/laporan.html" class="nav-link">
+            <i class="ri-book-2-fill"></i>
+            <span class="text">Laporan</span>
+        </a>
+        </li>
+    </ul>
+
+    <ul class="side-menu">
+        <li>
+        <a href="#" class="logout">
+            <i class="fas fa-right-from-bracket"></i>
+            <span class="text">Logout</span>
+        </a>
+        </li>
+    </ul>
+    </section>
+
+    <section class="content">
+        <nav>
+            <div class="icon-container">
+            <i class="fas fa-bars menu-btn"></i>
+            <a href="katalog.html">
+                <i class="ri-arrow-left-line"></i>
+            </a>
+            </div>
+        </nav>
+
+        <!-- <div>
+            <div class="image-actions" style="
+                    padding: 30px;
+                    height: 0px;
+                ">
+                <button class="action-btn edit-btn" onclick="toggleEdit()">
+                    Edit
+                </button>
+                <button
+                    class="action-btn delete-btn"
+                    onclick="deleteSelectedImages()"
+                >
+                    Hapus
+                </button>
+                <button class="action-btn add-btn" onclick="addNewCatalog()">
+                    Tambah Katalog
+                </button>
+            </div> 
+            <div id="newCatalogForm" style="display: none; padding: 30px;">
+                <form onsubmit="addCatalogFromForm(event)">
+                    <label for="catalogTitle">Title:</label>
+                    <input type="text" id="catalogTitle" name="catalogTitle" required />
+
+                    <label for="catalogImage">Choose Image:</label>
+                    <input
+                        type="file"
+                        id="catalogImage"
+                        name="catalogImage"
+                        accept="image/*"
+                        required
+                    />
+
+                    <img
+                        id="previewImage"
+                        src="#"
+                        alt="Preview Image"
+                        style="display: none; max-width: 100%"
+                    />
+
+                    <button type="submit">Add Catalog</button>
+                </form>
+            </div> 
+        </div> -->
+
+    <!-- ===== ISI KONTEN KATALOG ===== -->
+
+        <main>
+            <!-- <div class="image-gallery">
+            <img src="../img/D21cm.png" alt="Image 1" class="zoomable2" />
+            <img src="../img/D15cm.png" alt="Image 2" class="zoomable2" />
+            <img src="../img/priceList3.png" alt="Image 3" class="zoomable2" />
+            <img src="../img/priceList2.png" alt="Image 1" class="zoomable2" />
+            <img src="../img/priceList3.png" alt="Image 2" class="zoomable2" />
+            <img src="../img/priceList1.png" alt="Image 3" class="zoomable2" />
+            </div> -->
+            <div>
+
+            <!-- <button 
+                class="action-btn2" 
+                style="    
+                position: fixed;
+                right: 170px;">
+                Tambah
+            </button> -->
+
+            <div id="newAddbasecake" style="position: fixed; right: 170px;">
+                <form onsubmit="addBaseCake(Event)">
+                <h4 style="display: inline;">Ukuran Cake: </h4>
+                <input type="text" style="display: inline;">
+                <h4 style="display: inline;">Jenis Cake: </h4>
+                <input type="text" style="display: inline;">
+                <button class="action-btn" style="display: inline; margin-left: 40px;">Tambah</button>
+                </form>
+            </div>
+
+            </div>
+            <div class="container">
+            <div class="table-container">
+                
+                <table>
+
+                    <thead>
+                    <tr>
+                        <th class="no">No.</th>
+                        <th>Ukuran Cake</th>
+                        <th>Jenis Cake</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="dataUkuranCake" class="table-container">
+                    <!-- data base cake -->
+                    </tbody>
+
+                </table>
+
+            </div>
+            </div>
+        </main>
+
+        <div class="overlay">
+            <span class="close-btn" onclick="closeOverlay()">&times;</span>
+            <img src="" alt="Zoomed Image" class="zoomed-image" />
+        </div>
+    </section>
+
+    <script src="../dashboard/app.js"></script>
+    <script src="../katalog/script.js"></script>
+    <script src="../katalog/katalog.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const images = document.querySelectorAll(".zoomable2");
+        const overlay = document.querySelector(".overlay");
+        const zoomedImage = document.querySelector(".zoomed-image");
+
+        images.forEach((image) => {
+        image.addEventListener("click", function () {
+            zoomedImage.src = image.src;
+            overlay.classList.add("active");
+        });
+        });
+
+        overlay.addEventListener("click", function () {
+        closeOverlay();
+        });
+    });
+
+    function closeOverlay() {
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.remove("active");
+    }
+    </script>
+    
+</body>
+</html>

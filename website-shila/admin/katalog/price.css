@@ -26,6 +26,7 @@ nav {
 
 .zoomable {
   width: 100%;
+  border-radius: 10px;
   max-width: 300px;
   margin: 10px;
   cursor: pointer;
@@ -35,6 +36,67 @@ nav {
 .zoomable:hover {
   transform: scale(1.1);
 }
+
+.zoomable2 {
+  width: 50%;
+  border-radius: 10px;
+  max-width: 300px;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.zoomable2:hover {
+  transform: scale(1.1);
+}
+
+/* tabel */
+.container {
+  margin: 10px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  max-height: 500px;
+  margin-top: 36px;
+  padding-bottom: 300px;
+  background: #f9f9f9;
+  border-radius: 20px;
+  align-items: center;
+  overflow: auto;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.container .no {
+  border-top-left-radius: 10px;
+}
+
+.container .status {
+  border-top-right-radius: 10px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  border-right: solid 1.5px #ddd;
+}
+
+thead {
+  background-color: #6b5048;
+  color: white;
+}
+
 
 .overlay {
   display: none;

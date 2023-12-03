@@ -41,7 +41,7 @@ body {
 }
 
 /* Button */
-.action-btn {
+.action-btn, .action-btn2 {
   background-color: #6b5048;
   color: white;
   padding: 8px 16px;

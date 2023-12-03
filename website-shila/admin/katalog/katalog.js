@@ -41,7 +41,13 @@ function selectImage(album) {
     }
   }
 }
+//tambah
 function addNewCatalog() {
   const form = document.getElementById('newCatalogForm');
   form.style.display = 'block'; // Show the form
+}
+//batal
+function batalBtn() {
+  const form = document.getElementById('newCatalogForm');
+  form.style.display = 'none';
 }

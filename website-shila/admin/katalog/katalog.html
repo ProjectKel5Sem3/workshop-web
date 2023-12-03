@@ -77,7 +77,8 @@
         </a>
       </nav>
 
-      <main>
+      <!-- 
+        <main>
         <div class="image-actions">
           <button class="action-btn edit-btn" onclick="toggleEdit()">
             Edit
@@ -91,7 +92,7 @@
           <button class="action-btn add-btn" onclick="addNewCatalog()">
             Tambah Katalog
           </button>
-        </div>
+        </div> 
         <div id="newCatalogForm" style="display: none">
           <form onsubmit="addCatalogFromForm(event)">
             <label for="catalogTitle">Title:</label>
@@ -115,7 +116,8 @@
 
             <button type="submit">Add Catalog</button>
           </form>
-        </div>
+        </div>  
+      -->
 
         <div class="gallery">
           <div class="album selectable" onclick="selectImage(this)">
@@ -142,6 +144,15 @@
             </a>
             <div class="caption">
               <p class="category">Ukuran Cake</p>
+            </div>
+          </div>
+
+          <div class="album selectable" onclick="selectImage(this)">
+            <a href="designCake.html">
+              <img src="../img/D15cm.png" alt="Album 3" />
+            </a>
+            <div class="caption">
+              <p class="category">Design Cake</p>
             </div>
           </div>
         </div>

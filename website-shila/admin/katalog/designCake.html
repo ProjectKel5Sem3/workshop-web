@@ -80,7 +80,8 @@
         </div>
       </nav>
 
-      <!-- <div>
+      <!-- 
+        <main>
         <div class="image-actions">
           <button class="action-btn edit-btn" onclick="toggleEdit()">
             Edit
@@ -118,73 +119,32 @@
 
             <button type="submit">Add Catalog</button>
           </form>
-        </div>  -->
+        </div>  
+      -->
 
-        <!-- ===== ISI KONTEN KATALOG ===== -->
-
-        <main>
-          <div class="image-gallery">
-
-            <div 
-            style="
-              display: grid;
-              justify-items: center;">
-              <img src="../img/priceList1.png" alt="Image 1" class="zoomable" />
-              <!-- <span>saya</span> -->
-            </div>
-
-            <img src="../img/priceList2.png" alt="Image 2" class="zoomable" />
-            <img src="../img/priceList3.png" alt="Image 3" class="zoomable" />
-            <!-- <img src="../img/priceList2.png" alt="Image 1" class="zoomable" />
-            <img src="../img/priceList3.png" alt="Image 2" class="zoomable" />
-            <img src="../img/priceList1.png" alt="Image 3" class="zoomable" /> -->
-          </div>
-
-          <div>
-            <h3 style="margin-top: 20px; width: 100%; text-align: center; margin-left: 0;">Cake</h3>
-            <input type="text" id="cari1" placeholder="Search" style="margin-left: 100px; margin-top: 10px;" >
-          </div>
-          <div class="container">
-            <div class="table-container">
-              <table>
-                  <thead>
-                      <th class="no">No.</th>
-                      <th>Ukuran Cake</th>
-                      <th>Jenis Cake</th>
-                      <th>Base Cake</th>
-                      <th>Harga</th>
-                    </tr>
-                  </thead>
-                  <tbody id="dataPriceList">
-                    <!-- data tabel -->
-                  </tbody>
-              </table>
+        <div class="gallery">
+          <div class="album selectable" onclick="selectImage(this)">
+            <a href="desain/bento.html">
+              <img src="../img/bentoCake(10cm).png" alt="Album 1" />
+            </a>
+            <div class="caption">
+              <p class="category">Bento Cake (10cm)</p>
             </div>
           </div>
-          <div>
-            <h3 style="margin-top: 20px; width: 100%; text-align: center; margin-left: 0;">Toping</h3>
-            <input type="text" id="cari2" placeholder="Search" style="margin-left: 100px; margin-top: 10px;" >
-          </div>
-          <div class="container">
-            <div class="table-container">
-              <table>
-                  <thead>
-                      <th class="no">No.</th>
-                      <th>Toping</th>
-                      <th>Harga</th>
-                    </tr>
-                  </thead>
-                  <tbody id="dataPriceToping">
-                    <!-- data tabel -->
-                  </tbody>
-              </table>
+          
+          <div class="album selectable" onclick="selectImage(this)">
+            <a href="desain/birhday.html">
+              <img src="../img/D21cm.png" alt="Album 3" />
+            </a>
+            <div class="caption">
+              <p class="category">Birth-Day (12cm - 31cm)</p>
             </div>
           </div>
-        </main>
-      <div class="overlay" id="overlay">
-          <span class="close-btn" onclick="closeOverlay()">×</span>
-          <img src="" alt="Zoomed Image" class="zoomed-image">
-      </div>
+
+        </div>
+
+        <div class="content"></div>
+      </main>
     </section>
 
     <script src="../dashboard/app.js"></script>
@@ -192,28 +152,27 @@
     <script src="../katalog/katalog.js"></script>
 
     <script>
-      
-  document.addEventListener("DOMContentLoaded", function () {
-    const images = document.querySelectorAll(".zoomable");
-    const overlay = document.querySelector(".overlay");
-    const zoomedImage = document.querySelector(".zoomed-image");
+      document.addEventListener("DOMContentLoaded", function () {
+        const images = document.querySelectorAll(".zoomable2");
+        const overlay = document.querySelector(".overlay");
+        const zoomedImage = document.querySelector(".zoomed-image");
 
-    images.forEach((image) => {
-      image.addEventListener("click", function () {
-        zoomedImage.src = image.src;
-        overlay.classList.add("active");
+        images.forEach((image) => {
+          image.addEventListener("click", function () {
+            zoomedImage.src = image.src;
+            overlay.classList.add("active");
+          });
+        });
+
+        overlay.addEventListener("click", function () {
+          closeOverlay();
+        });
       });
-    });
 
-    overlay.addEventListener("click", function () {
-      closeOverlay();
-    });
-  });
-
-  function closeOverlay() {
-    const overlay = document.querySelector(".overlay");
-    overlay.classList.remove("active");
-  }
+      function closeOverlay() {
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.remove("active");
+      }
     </script>
     
   </body>
