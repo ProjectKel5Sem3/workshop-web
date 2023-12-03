@@ -69,7 +69,6 @@ if (isset($_GET['action'])){
                 break;
             }
             
-
             if ($action == 'tabel_transaksi') {
                 $query = "SELECT 
                             user.user_fullname, 
@@ -82,14 +81,14 @@ if (isset($_GET['action'])){
             
                 if ($result) {
                     $transactions = $result->fetch_all(MYSQLI_ASSOC);
-            
+                
                     // Filter transactions for the last week
                     $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
                     $filteredTransactions = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
                         return $transaction['waktu'] >= $oneWeekAgo;
                     });
-            
-                    echo json_encode($filteredTransactions);
+                
+                    echo json_encode(array_values($filteredTransactions)); // Mengubah objek menjadi array
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message" => "Error retrieving data"));

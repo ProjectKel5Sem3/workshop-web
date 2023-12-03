@@ -40,6 +40,8 @@ fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.
 fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=tabel_transaksi')
     .then(response => response.json())
     .then(data => {
+        console.log('Received data:', data);
+
         // Display data in the table
         const tableBody = document.getElementById('tabel-transaksi');
 
@@ -56,7 +58,8 @@ fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.
             tableBody.appendChild(row);
         });
     })
-.catch(error => console.error('Error fetching data:', error));
+    .catch(error => console.error('Error fetching data:', error));
+
 
 // note catatan
 document.addEventListener("DOMContentLoaded", function() {

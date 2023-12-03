@@ -143,14 +143,34 @@
           <i class="fas fa-filter"></i>
         </div> -->
 
-        <!-- Spinner Container -->
-        <div class="spinner-container">
-          <!-- Spinner Element -->
+        <!-- spinner -->
+        <div id="spinnerContainer" class="spinner-container">
           <div class="spinner"></div>
         </div>
 
+        <label for="statusFilter">Filter dengan Status:</label>
+        <select id="statusFilter">
+            <option value="all">All</option>
+            <option value="Menunggu konfirmasi">Menunggu konfirmasi</option>
+            <option value="menunggu pembayaran">menunggu pembayaran</option>
+            <option value="kue dibuat">kue dibuat</option>
+            <option value="selesai">selesai</option>
+        </select>
+
+        <!-- <div id="spinnerContainer" class="spinner-container">
+          <div class="spinner"></div>
+        </div> -->
+
+        <label for="timeFilter">Filter dengan Waktu:</label>
+        <select id="timeFilter">
+            <option value="all">All</option>
+            <option value="1 bulan">1 Bulan</option>
+            <option value="1 minggu">1 Minggu</option>
+        </select>
+
+        <!-- table -->
         <div class="container">
-          <div class="table-container">
+          <div class="table-container" id="tableContainer">
             <table>
               <thead>
                 <tr>
