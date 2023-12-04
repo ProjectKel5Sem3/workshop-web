@@ -1,125 +1,123 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Mendapatkan ID transaksi dari parameter URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const idTransaksi = urlParams.get('id');
+document.addEventListener('DOMContentLoaded', async function () {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const idTransaksi = urlParams.get('id');
+        const apiUrl = `http://localhost/a/github/workshop-web/website-shila/admin/pesanan/api_pesanan.php?action=rincian&id=${encodeURIComponent(idTransaksi)}`;
 
-    // URL API untuk rincian pesanan
-    const apiUrl = 'http://localhost/a/github/workshop-web/website-shila/admin/pesanan/api_pesanan.php?action=rincian';
- 
-    // Fetch data dari API menggunakan ID transaksi
-    fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'id=' + encodeURIComponent(idTransaksi),
-    })
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(rincian => {
-                // Mengisi elemen-elemen pada halaman rincian_pesanan dengan data dari API
-                const orderDetailCard = document.getElementById('order2');
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id=' + encodeURIComponent(idTransaksi),
+        });
 
-                if (orderDetailCard) {
+        if (!response.ok) {
+            throw new Error('Gagal mengambil data pesanan.');
+        }
 
-                    const numberPesanan = document.createElement('h3');
-                    numberPesanan.textContent = 'Pesanan ' + rincian.id;
-                    orderDetailCard.appendChild(numberPesanan);
+        const data = await response.json();
+        data.forEach(rincian => {
+            const orderDetailCard = document.getElementById('order2');
 
-                    // orderDetailCard.querySelector('h4#nama').textContent = rincian.nama;
-                    const rincianUser0 = document.createElement('h4');
-                    rincianUser0.textContent = 'Nama';
-                    orderDetailCard.appendChild(rincianUser0);
+            if (orderDetailCard) {
+                const {
+                    id, nama, base, jenis, ukuran, toping, ket, waktu, harga, pict, status
+                } = rincian;
 
-                    const rincianUser = document.createElement('p');
-                    rincianUser.classList.add('nama0')
-                    rincianUser.textContent = rincian.nama;
-                    orderDetailCard.appendChild(rincianUser);
-
-                    // orderDetailCard.querySelector('h4#base-cake').textContent = rincian.base;
-                    const rincianBase0 = document.createElement('h4');
-                    rincianBase0.textContent = 'Base Cake';
-                    orderDetailCard.appendChild(rincianBase0);
-
-                    const rincianBase = document.createElement('p');
-                    rincianBase.textContent = rincian.base;
-                    orderDetailCard.appendChild(rincianBase);
-
-                    // orderDetailCard.querySelector('h4#ukuran-cake').textContent = rincian.jenis + ' (' + rincian.ukuran + ')';
-                    const rincianCake0 = document.createElement('h4');
-                    rincianCake0.textContent = 'Ukuran Cake';
-                    orderDetailCard.appendChild(rincianCake0);
-
-                    const rincianCake = document.createElement('p');
-                    rincianCake.textContent = rincian.jenis + ' (' + rincian.ukuran + ')';
-                    orderDetailCard.appendChild(rincianCake);
-
-                    // orderDetailCard.querySelector('h4#toping').textContent = rincian.toping;
-                    const rincianToping0 = document.createElement('h4');
-                    rincianToping0.textContent = 'Toping Cake';
-                    orderDetailCard.appendChild(rincianToping0);
-
-                    const rincianToping = document.createElement('p');
-                    rincianToping.textContent = rincian.toping;
-                    orderDetailCard.appendChild(rincianToping);
-
-                    // orderDetailCard.querySelector('h4#keterangan').textContent = rincian.ket;
-                    const rincinaKet0 = document.createElement('h4');
-                    rincinaKet0.textContent = 'Keterangan';
-                    orderDetailCard.appendChild(rincinaKet0);
-
-                    const rincinaKet = document.createElement('p');
-                    rincinaKet.textContent = rincian.ket;
-                    orderDetailCard.appendChild(rincinaKet);
-
-                    // orderDetailCard.querySelector('h4#waktu-pesanan').textContent = formatDate(rincian.waktu);
-                    const rincianWaktu0 = document.createElement('h4');
-                    rincianWaktu0.textContent = 'Waktu Pemesanan';
-                    orderDetailCard.appendChild(rincianWaktu0);
-
-                    const rincianWaktu = document.createElement('p');
-                    rincianWaktu.textContent = formatDate(rincian.waktu);
-                    orderDetailCard.appendChild(rincianWaktu);
-
-                    // orderDetailCard.querySelector('h4#harga-total').textContent = 'Rp ' + formatCurrency(rincian.harga);
-                    const rincianTotal0 = document.createElement('h4');
-                    rincianTotal0.textContent = 'Haraga Total';
-                    orderDetailCard.appendChild(rincianTotal0);
-
-                    const rincianTotal = document.createElement('p');
-                    rincianTotal.textContent = 'Rp ' + formatCurrency(rincian.harga);
-                    orderDetailCard.appendChild(rincianTotal);
-
-                    // orderDetailCard.querySelector('img#design-cake').src = '../img/' + rincian.pict;
-                    const rincianDesain0 = document.createElement('h4');
-                    rincianDesain0.textContent = 'Foto Desain Cake';
-                    orderDetailCard.appendChild(rincianDesain0);
-
-                    const rincianDesain = document.createElement('img');
-                    rincianDesain.classList.add('pictDesain')
-                    rincianDesain.src = '../img/' + rincian.pict;
-                    orderDetailCard.appendChild(rincianDesain);
-
-                    // orderDetailCard.querySelector('h4#status').textContent = getStatusLabel(rincian.status);
-                    const rincianStatus0 = document.createElement('h4');
-                    rincianStatus0.textContent = 'Status';
-                    orderDetailCard.appendChild(rincianStatus0);
-                    
-                    const rincianStatus = document.createElement('p');
-                    rincianStatus.classList.add('wait');
-                    rincianStatus.textContent = rincian.status;
-                    orderDetailCard.appendChild(rincianStatus);
-
-                }
+                const createAndAppendElement = (tag, textContent, className) => {
+                    const element = document.createElement(tag);
+                    if (textContent) element.textContent = textContent;
+                    if (className) element.classList.add(className);
+                    return element;
+                };
                 
 
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            // Tambahkan penanganan kesalahan jika diperlukan
+                orderDetailCard.append(
+                    createAndAppendElement('h3', `Pesanan ${id}`),
+                    createAndAppendElement('h4', 'Nama  : ', 'nama0'),
+                    createAndAppendElement('p', nama, 'nama0'),
+                    createAndAppendElement('h4', 'Base Cake'),
+                    createAndAppendElement('p', base),
+                    createAndAppendElement('h4', 'Ukuran Cake'),
+                    createAndAppendElement('p', `${jenis} (${ukuran})`),
+                    createAndAppendElement('h4', 'Toping Cake'),
+                    createAndAppendElement('p', toping),
+                    createAndAppendElement('h4', 'Keterangan'),
+                    createAndAppendElement('p', ket),
+                    createAndAppendElement('h4', 'Waktu Pemesanan'),
+                    createAndAppendElement('p', formatDate(waktu)),
+                    createAndAppendElement('h4', 'Haraga Total'),
+                    createAndAppendElement('p', `${formatCurrency(harga)}`),
+                    createAndAppendElement('h4', 'Foto Desain Cake'),
+                    createImageElement(`../img/${pict}`, 'pictDesain'),
+                    createAndAppendElement('h4', 'Status'),
+                    createAndAppendElement('p', status, 'wait'),
+                );
+
+                const spinnerContainer = document.createElement('div');
+                spinnerContainer.classList.add('spinner-container');
+
+                const ubahStatus0 = createAndAppendElement('h4', 'Ubah Status');
+                const spinner = document.createElement('select');
+                spinner.classList.add('spinner');
+
+                const options = ['','kue dibuat', 'selesai'];
+                options.forEach((option) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    spinner.appendChild(optionElement);
+                });
+
+                spinner.addEventListener('change', (event) => {
+                    const selectedStatus = event.target.value;
+                    ubahStatusPesanan(selectedStatus);
+                });
+
+                spinnerContainer.append(ubahStatus0, spinner);
+                orderDetailCard.appendChild(spinnerContainer);
+
+                spinnerContainer.style.display = (status === 'selesai' || status === 'Menunggu konfirmasi') ? 'none' : 'block';
+
+                async function ubahStatusPesanan(status) {
+                    try {
+                        const apiUrl = 'http://localhost/a/github/workshop-web/website-shila/admin/pesanan/api_pesanan.php?action=ubahStatus';
+
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `id_transaksi=${encodeURIComponent(idTransaksi)}&status=${encodeURIComponent(status)}`,
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Gagal mengubah status pesanan.');
+                        }
+
+                        const responseData = await response.json();
+                        console.log('Status pesanan berhasil diubah:', responseData);
+
+                        // Refresh halaman setelah berhasil mengubah status
+                        location.reload(true); // Jika parameter true diberikan, maka akan melakukan reload dari server, bukan dari cache.
+
+                    } catch (error) {
+                        console.error('Terjadi kesalahan:', error.message);
+                    }
+                }
+            }
         });
+    } catch (error) {
+        console.error('Terjadi kesalahan:', error);
+        alert('Terjadi kesalahan. Silakan coba lagi.');
+    }
 });
+
+// Fungsi untuk mengubah status pesanan melalui API
+
+
+
 
 // Fungsi untuk mengubah format tanggal
 function formatDate(dateTimeString) {

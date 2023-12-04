@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="../font/font.css">
     <!-- Icon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <script src="../admin/dashboard/app.js"></script>
 </head>
 <body>
 
@@ -50,6 +58,7 @@
 
             var userEmail = document.getElementById('your-email').value;
             var userPassword = document.getElementById('password').value;
+            
             //ip = cmd -> ipconfig -> IPv4 Address -> 000.000.0.0
             fetch('http://localhost/a/github/workshop-web/dari%20dimas/API/api_users.php?action=login', {
                 method: 'POST',
@@ -62,6 +71,7 @@
             .then(function(data) {
                 if (data.code === 200) {
                     window.location.href = '../admin/dashboard/dashboard.html';
+                    // window.location.href = '../admin/katalog/katalog.html'
                 } else if (data.code === 401) {
                     alert('login Gagal. Username atau password salah.')
                 } else if (data.code === 500) {

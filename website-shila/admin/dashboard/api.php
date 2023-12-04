@@ -114,6 +114,43 @@ if (isset($_GET['action'])){
             break;
 
         case 'POST' :
+            if ($action == 'akun') {
+                // Validate and sanitize input
+                $valId = isset($_POST['id']) ? intval($_POST['id']) : null;
+        
+                if ($valId !== null) {
+                    // Use prepared statements to prevent SQL injection
+                    $query = "SELECT id, user_email as email, user_fullname as nama, telp, pict FROM user WHERE id = ?";
+                    $stmt = $koneksi->prepare($query);
+        
+                    // Bind the parameter and execute the query
+                    $stmt->bind_param("i", $valId);
+                    $stmt->execute();
+                    
+                    // Check for successful execution
+                    if ($stmt->errno) {
+                        http_response_code(500);
+                        echo json_encode(array("message" => "Error executing query: " . $stmt->error));
+                    } else if ($valId != 1) {
+                        http_response_code(401);
+                        echo json_encode(array("message" => "Bukan admin"));
+                    } else {
+                        // Fetch results and return as JSON
+                        $result = $stmt->get_result();
+                        $user = $result->fetch_all(MYSQLI_ASSOC);
+                        echo json_encode($user);
+                    }                 
+        
+                    // Close the statement
+                    $stmt->close();
+                } else {
+                    http_response_code(400); // Bad Request
+                    echo json_encode(array("message" => "Invalid or missing 'id' parameter"));
+                }
+        
+                break;
+            }
+
             if ($action == 'note_write') {
                 $valCatatan = isset($_POST['catatan']) ? $_POST['catatan'] : '';
             

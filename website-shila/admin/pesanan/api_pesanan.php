@@ -86,6 +86,24 @@ if (isset($_GET['action'])){
                 break;
             }
 
+            if ($action == 'ubahStatus') {
+
+                $valId = $_POST['id_transaksi'];
+                $valStatus = $_POST['status'];
+
+                $query = "UPDATE `transaksi` SET `status` = '$valStatus' WHERE `id_transaksi` = '$valId'";
+
+                $result = $koneksi->query($query);
+
+                if ($result === TRUE) {
+                    echo json_encode(array("message" => "Update successful"));
+                } else {
+                    http_response_code(500);
+                    echo json_encode(array("message" => "Error updating data: " . $koneksi->error));
+                }
+                break;
+            }
+
             break;
 
         default :
