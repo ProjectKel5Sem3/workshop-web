@@ -19,41 +19,48 @@
     />
 
     <!-- CSS file -->
-    <link rel="stylesheet" href="../../katalog/../dashboard/styles.css" />
-    <link rel="stylesheet" href="../../katalog/katalog.css" />
-    <link rel="stylesheet" href="../price.css" />
+    <link rel="stylesheet" href="../katalog/../dashboard/styles.css" />
+    <link rel="stylesheet" href="../katalog/katalog.css" />
+    <link rel="stylesheet" href="price.css" />
 
-
+    <style>
+      .imgProfil-container .imgP {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    </style>
 
   </head>
   <body>
     <section class="sidebar">
       <a href="#" class="logo">
-        <img src="../../img/logo.png" alt="logo" width="40px" />
+        <img src="../img/logo.png" alt="logo" width="40px" />
         <span class="text">ViosCake</span>
       </a>
 
       <ul class="side-menu top">
         <li class="">
-          <a href="../../dashboard/dashboard.html" class="nav-link">
+          <a href="../dashboard/dashboard.html" class="nav-link">
             <i class="ri-home-3-fill"></i>
             <span class="text">Dashboard</span>
           </a>
         </li>
         <li class="active">
-          <a href="../../katalog/katalog.html" class="nav-link">
+          <a href="../katalog/katalog.html" class="nav-link">
             <i class="ri-image-2-fill"></i>
             <span class="text">Katalog</span>
           </a>
         </li>
         <li>
-          <a href="../../pesanan/pesanan.html" class="nav-link">
+          <a href="../pesanan/pesanan.html" class="nav-link">
             <i class="ri-list-unordered"></i>
             <span class="text">Pesanan</span>
           </a>
         </li>
         <li>
-          <a href="../../laporan/laporan.html" class="nav-link">
+          <a href="../laporan/laporan.html" class="nav-link">
             <i class="ri-book-2-fill"></i>
             <span class="text">Laporan</span>
           </a>
@@ -68,21 +75,34 @@
           </a>
         </li>
       </ul>
+
     </section>
 
     <section class="content">
       <nav>
         <div class="icon-container">
           <i class="fas fa-bars menu-btn"></i>
-          <a href="../designCake.html">
+          <a href="designCake.html">
             <i class="ri-arrow-left-line"></i>
           </a>
         </div>
+        <div 
+          class="imgProfil-container" 
+          id="imgProfile-cont"
+          style="
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: absolute; 
+            right: 40px; 
+            top: 10px;
+            "
+        ></div>
       </nav>
 
         <!-- ===== ISI KONTEN KATALOG ===== -->
 
-        <div class="image-gallery" id="imageGallery1">
+        <div class="image-gallery" id="imageGallery2">
           <!-- Images will be dynamically added here -->
         </div>
         
@@ -92,9 +112,9 @@
         </div>
     </section>
 
-    <script src="../../dashboard/app.js"></script>
-    <script src="../../katalog/script.js"></script>
-    <script src="../../katalog/katalog.js"></script>
+    <script src="../dashboard/app.js"></script>
+    <script src="../katalog/script.js"></script>
+    <script src="../katalog/katalog.js"></script>
 
     <script>
       

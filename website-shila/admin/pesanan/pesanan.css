@@ -92,6 +92,7 @@ nav {
   width: 100px;
   height: 40px;
   transition: 0.3s linear;
+  font-weight: bold;
 }
 
 @keyframes spin {

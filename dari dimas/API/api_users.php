@@ -8,6 +8,9 @@
     -hapus user pada DELETE
 */
 
+
+use Google\Service\RemoteBuildExecution\Resource\Actions;
+
 header ('Content-Type: application/json');
 
 include '../../website-shila/connect.php';
@@ -77,6 +80,80 @@ if (isset($_GET['action'])){
                 break;
             }
 
+            if ($action == 'login2') {
+                $email = $_POST['user_email'];  // Access data from form-data in POST request
+                $password = $_POST['user_password'];
+
+                $query_check = "select * from user where user_email = '$email'";
+                $check = mysqli_fetch_array(mysqli_query($koneksi, $query_check));
+                $json_array = array();
+                $response = "";
+
+                if (isset($check)) {
+                    $query_check_pass = "select * from user where user_email = '$email' and user_password = '$password'";
+                    $query_pass_result = mysqli_query($koneksi, $query_check_pass);
+                    $check_password = mysqli_fetch_array($query_pass_result);
+                    if (isset($check_password)) {
+                        $apiKey = bin2hex(random_bytes(23)); // Generate API Key
+                        $query_update_apiKey = "UPDATE user SET apiKey = '$apiKey' WHERE user_email = '$email'";
+                        mysqli_query($koneksi, $query_update_apiKey); // Set API Key in the database
+
+                        $query_pass_result = mysqli_query($koneksi, $query_check_pass);
+                        while ($row = mysqli_fetch_assoc($query_pass_result)) {
+                            $json_array[] = $row;
+                        }
+                        $response = array(
+                            'code' => 200,
+                            'status' => 'Sukses',
+                            'data' => $json_array
+                        );
+                        echo json_encode($response);
+                    } else {
+                        $response = array(
+                            'code' => 401,
+                            'status' => 'Password salah, periksa kembali!',
+                            'data' => $json_array
+                        );
+                        echo json_encode($response);
+                    }
+                } else {
+                    $response = array(
+                        'code' => 404,
+                        'status' => 'Data tidak ditemukan',
+                        'data' => $json_array
+                    );
+                    echo json_encode($response);
+                }
+                break;
+            }
+
+            if ($action == 'logout') {
+                $email = $_POST['user_email']; // Access data from form-data in POST request
+                $apiKey = $_POST['apiKey'];
+            
+                $query_check_apiKey = "SELECT * FROM user WHERE user_email = '$email' AND apiKey = '$apiKey'";
+                $check_apiKey = mysqli_fetch_array(mysqli_query($koneksi, $query_check_apiKey));
+                $response = "";
+            
+                if (isset($check_apiKey)) {
+                    $query_update_apiKey = "UPDATE user SET apiKey = '' WHERE user_email = '$email'";
+                    mysqli_query($koneksi, $query_update_apiKey); // Remove API Key from the database
+            
+                    $response = array(
+                        'code' => 200,
+                        'status' => 'Logout berhasil',
+                    );
+                    echo json_encode($response);
+                } else {
+                    $response = array(
+                        'code' => 401,
+                        'status' => 'Unauthorized, apiKey tidak valid!',
+                    );
+                    echo json_encode($response);
+                }
+                break;
+            }
+            
             if ($action == 'add_users') {
                 $valNama = $_POST['user_fullname'];
                 $valEmail = $_POST['user_email'];

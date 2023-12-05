@@ -197,7 +197,29 @@ if (isset($_GET['action'])){
                     http_response_code(400);
                     echo json_encode(array("message" => "Catatan parameter is missing"));
                 }
-            }            
+                break;
+            }
+
+            if ($action == 'imgProfile') {
+                $apiKey = $_POST['apiKey'];
+
+                $query = "SELECT 
+                            apiKey, user_fullname as nama, 
+                            user_email as email, 
+                            pict 
+                            FROM `user` WHERE apiKey = '$apiKey'";
+                            
+                $result = $koneksi->query($query);
+
+                if ($result) {
+                    $transactions = $result->fetch_all(MYSQLI_ASSOC);
+                    echo json_encode($transactions);
+                } else {
+                    http_response_code(500);
+                    echo json_encode(array("message" => "Error retrieving data"));
+                }
+                break;
+            }
 
             break;
 

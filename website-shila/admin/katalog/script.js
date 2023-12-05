@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
             data.forEach(imageData => {
                 const imgElement = document.createElement("img");
                 imgElement.classList.add('zoomable');
-                imgElement.src = '../../img/' + imageData.gambar; // Assuming there's a 'gambar' property in your data
+                imgElement.src = '../img/' + imageData.gambar; // Assuming there's a 'gambar' property in your data
                 imgElement.alt = imageData.alt || ''; // Set alt attribute if available
                 imageGallery.appendChild(imgElement);
 
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function() {
             data.forEach(imageData => {
                 const imgElement = document.createElement("img");
                 imgElement.classList.add('zoomable');
-                imgElement.src = '../../img/' + imageData.gambar; // Assuming there's a 'gambar' property in your data
+                imgElement.src = '../img/' + imageData.gambar; // Assuming there's a 'gambar' property in your data
                 imgElement.alt = imageData.alt || ''; // Set alt attribute if available
                 imageGallery.appendChild(imgElement);
 

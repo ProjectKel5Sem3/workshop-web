@@ -25,13 +25,24 @@ document.addEventListener('DOMContentLoaded', async function () {
                     id, nama, base, jenis, ukuran, toping, ket, waktu, harga, pict, status
                 } = rincian;
 
-                const createAndAppendElement = (tag, textContent, className) => {
+                function createAndAppendElement(tag, textContent, className, src) {
                     const element = document.createElement(tag);
                     if (textContent) element.textContent = textContent;
                     if (className) element.classList.add(className);
+                    if (src) {
+                        if (tag.toLowerCase() === 'img') {
+                            element.setAttribute('src', src);
+                        } else {
+                            console.warn('Trying to set src on non-img element.');
+                        }
+                    }
                     return element;
-                };
+                }
                 
+                function createImageElement(src, className) {
+                    return createAndAppendElement('img', null, className, src);
+                }
+                                
 
                 orderDetailCard.append(
                     createAndAppendElement('h3', `Pesanan ${id}`),

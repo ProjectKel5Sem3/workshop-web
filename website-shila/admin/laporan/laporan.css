@@ -69,6 +69,7 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
   max-width: 900px;
+  max-height: 350px;
   margin-top: 36px;
   padding-bottom: 300px;
   background: #f9f9f9;
@@ -78,6 +79,7 @@ body {
 
 .table-container {
   overflow-x: auto;
+  overflow-y: auto;
 }
 
 table {

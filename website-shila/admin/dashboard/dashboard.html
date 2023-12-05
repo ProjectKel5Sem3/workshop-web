@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard ViosCake</title>
 
+    <link rel="icon" href="../../company-profile/image/tentang-kami.png" sizes="16x16" type="image/x-icon">
+    <link rel="icon" href="../../company-profile/image/tentang-kami.png" sizes="64x64 128x128 256x256" type="image/png">
+
     <!-- Font -->
     <link
       rel="stylesheet"
@@ -24,6 +27,15 @@
 
     <!-- script -->
     <script src="script.js" defer></script>
+
+    <style>
+      .imgProfil-container .imgP {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    </style>
 
   </head>
   <body>
@@ -87,16 +99,29 @@
 
         <i class="fas fa-bars menu-btn"></i>
 
-        <a 
+        <div 
+          class="imgProfil-container" 
+          id="imgProfile-cont"
+          style="
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: absolute; 
+            right: 40px; 
+            top: 10px;
+            "
+        ></div>
+
+        <!-- <a 
           href="#" 
           class="profile" 
           id="profil" 
           style="    
             position: fixed;
             right: 40px;
-            top: 15px;">
+            top: 10px;">
           <img src="../dashboard/../img/profile.jpg" alt="" id="pictProfil"/>
-        </a>
+        </a> -->
 
         <!-- <a href="#" class="nav-link">Categories</a> -->
 
@@ -272,6 +297,7 @@
     </script>
   
     <script src="../dashboard/app.js"></script>
+
   </body>
 
 </html>

@@ -46,6 +46,12 @@ body.dark {
   --dark: #fbfbfb;
 }
 
+/* .imgProfil-container .imgP {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+} */
+
 .sidebar {
   position: fixed;
   top: 0;

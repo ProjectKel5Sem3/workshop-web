@@ -102,13 +102,19 @@ function fetchNotes() {
                 const newNoteElement = document.createElement("div");
                 newNoteElement.classList.add("saved-note");
 
-                const noteIDElement = document.createElement("span");
+                const noteIDElement = document.createElement("span");                
                 noteIDElement.textContent = note.id_catatan;
                 newNoteElement.appendChild(noteIDElement);
 
                 const noteTextElement = document.createElement("span");
+                noteIDElement.classList.add('nota');
                 noteTextElement.textContent = note.catatan;
                 newNoteElement.appendChild(noteTextElement);
+
+                const noteWaktuElement = document.createElement("span");
+                noteWaktuElement.textContent = '(' + note.waktu + ')';
+                noteWaktuElement.style.color = 'orange';
+                newNoteElement.appendChild(noteWaktuElement);
 
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";

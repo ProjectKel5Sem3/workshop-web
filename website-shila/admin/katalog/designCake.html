@@ -23,7 +23,14 @@
     <link rel="stylesheet" href="../katalog/katalog.css" />
     <link rel="stylesheet" href="price.css" />
 
-
+    <style>
+      .imgProfil-container .imgP {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    </style>
 
   </head>
   <body>
@@ -77,6 +84,18 @@
           <a href="katalog.html">
             <i class="ri-arrow-left-line"></i>
           </a>
+          <div 
+          class="imgProfil-container" 
+          id="imgProfile-cont"
+          style="
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: absolute; 
+            right: 40px; 
+            top: 10px;
+            "
+        ></div>
         </div>
       </nav>
 
@@ -124,7 +143,7 @@
 
         <div class="gallery">
           <div class="album selectable" onclick="selectImage(this)">
-            <a href="desain/bento.html">
+            <a href="bento.html">
               <img src="../img/bentoCake(10cm).png" alt="Album 1" />
             </a>
             <div class="caption">
@@ -133,7 +152,7 @@
           </div>
           
           <div class="album selectable" onclick="selectImage(this)">
-            <a href="desain/birhday.html">
+            <a href="birhday.html">
               <img src="../img/D21cm.png" alt="Album 3" />
             </a>
             <div class="caption">

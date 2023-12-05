@@ -1,66 +1,54 @@
-// document.addEventListener('DOMContentLoaded', function() {
-//   var loginForm = document.getElementById('loginForm');
 
-//   loginForm.addEventListener('submit', function(event) {
-//       event.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+  // Retrieve apiKey from local storage
+  var apiKey = localStorage.getItem('apiKey');
+  console.log('API Key:', apiKey); // Debugging statement
 
-//       var userEmail = document.getElementById('your-email').value;
-//       var userPassword = document.getElementById('password').value;
+  fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=imgProfile', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: 'apiKey=' + encodeURIComponent(apiKey),
+  })
+      .then(function (response) {
+          console.log(response); // Debugging statement
 
-//       //ip = cmd -> ipconfig -> IPv4 Address -> 000.000.0.0
-//       fetch('http://localhost/a/github/workshop-web/dari%20dimas/API/api_users.php?action=login', {
-//           method: 'POST',
-//           headers: { 'Content-Type': 'application/x-www-form-urlencoded', },
-//           body: 'user_email=' + encodeURIComponent(userEmail) + '&user_password=' + encodeURIComponent(userPassword),
-//       })
-//       .then(function(response) {
-//           return response.json();
-//       })
-//       .then(function(data) {
-//           if (data.code === 200) {
-//               // Successfully logged in, now fetch additional user information
-//               const userId = data.data[0].id;
+          // Check if the request was successful
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          // Parse the JSON data from the response
+          return response.json();
+      })
+      .then(function (data) {
+          console.log('Received data:', data);
 
-//               const urlApi = 'http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=akun';
+          const imgProfileCont = document.getElementById('imgProfile-cont');
+          imgProfileCont.innerHTML = "";
 
-//               return fetch(urlApi, {
-//                   method: 'POST',
-//                   headers: {
-//                       'Content-Type': 'application/x-www-form-urlencoded',
-//                   },
-//                   body: 'id=' + encodeURIComponent(userId)
-//               });
-//           } else if (data.code === 401) {
-//               alert('Login Gagal. Username atau password salah.');
-//           } else if (data.code === 500) {
-//               alert('Koneksi DB Gagal');
-//           }
-//       })
-//       .then(function(response) {
-//           if (response) {
-//               return response.json();
-//           }
-//       })
-//       .then(function(data) {
-//         // Update the profile picture
-//         const pictProfil = document.getElementById('pictProfil');
-//         if (data && data.length > 0) {
-//             const user = data [0];
-//             pictProfil.src = '../img/' + user;
-//         } else {
-//             alert('Gagal mendapatkan informasi akun.');
-//             // Redirect to the login page
-//             // window.location.href = '../login-admin/login.php';
-//         }
-//       })
-    
-//       .catch(function(error) {
-//         console.error('Error during fetch:', error);
-//         alert('Terjadi kesalahan. Lihat konsol untuk rincian.');
-//       });
-    
-//   });
-// });
+          if (data.length === 0) {
+              // Redirect to login.php if data is empty
+              redirectToLoginPage();
+          } else {
+              data.forEach(function (profile) {
+                  const imgPro = document.createElement('img');
+                  imgPro.classList.add('imgP');
+                  imgPro.src = '../img/' + profile.pict; // Use profile.pict instead of data.pict
+                  imgProfileCont.appendChild(imgPro); // Append the created image element to the container
+              });
+          }
+      })
+      .catch(function (error) {
+          console.error('Error:', error);
+      });
+
+    // Function to redirect to login page
+    function redirectToLoginPage() {
+      window.location.replace('../../login-admin/login.php');
+    }
+});
+
 
 
 let sideMenu = document.querySelectorAll(".nav-link");
