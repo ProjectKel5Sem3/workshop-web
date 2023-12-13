@@ -50,8 +50,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-
-
 // tabel transaksi
 fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=tabel_transaksi')
     .then(response => response.json())
@@ -76,8 +74,6 @@ fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.
     })
     .catch(error => console.error('Error fetching data:', error));
 
-
-// note catatan
 // note catatan
 document.addEventListener("DOMContentLoaded", function () {
     // Fetch and display existing notes on page load

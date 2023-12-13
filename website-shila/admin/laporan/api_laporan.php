@@ -9,6 +9,8 @@ $request_method = $_SERVER['REQUEST_METHOD'];
 $query = "SELECT 
             transaksi.id_transaksi as id,
             user.user_fullname AS nama, 
+            user.alamat AS alamat,
+            user.telp AS telp,
             ukuran_cake.ukuran AS ukuran, 
             transaksi.waktu as tanggalpesan, 
             transaksi.total as hargatotal, 

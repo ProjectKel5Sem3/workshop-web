@@ -4,6 +4,15 @@ document.addEventListener('DOMContentLoaded', function () {
   var apiKey = localStorage.getItem('apiKey');
   console.log('API Key:', apiKey); // Debugging statement
 
+  // Check if apiKey is present
+  if(apiKey) {
+    // hapus apiKey yang tersimpan dalam tiga jam
+    setTimeout(function() {
+      localStorage.removeItem('apiKey');
+      console.log('API Key removed from localStorage after one minute.');
+    }, 10800000);
+  }
+
   fetch('http://localhost/a/github/workshop-web/website-shila/admin/dashboard/api.php?action=imgProfile', {
       method: 'POST',
       headers: {
@@ -93,14 +102,20 @@ window.addEventListener("resize", () => {
 //   }
 // });
 
+
+// set waktu untuk keluar jika sesi telah berakhir
 let timeout;
 
 function startSessionTimeout() {
   console.log('Session timeout started.');
   timeout = setTimeout(function() {
+    // hapus apiKey
+    localStorage.removeItem('apiKey');
+    console.log('API Key removed from localStorage.');
+
     // Redirect ke halaman login setelah 1 menit tanpa aktivitas
     window.location.href = "../../login-admin/login.php";
-  }, 30 * 60 * 1000); // 1 menit dalam milidetik
+  }, 60 * 60 * 1000); // 1 jam dalam milidetik
 }
 
 function resetSessionTimeout() {

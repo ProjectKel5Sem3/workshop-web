@@ -163,60 +163,90 @@
           <i class="fas fa-filter"></i>
         </div> -->
 
-        <!-- spinner -->
-        <div class="fin" style="margin-left: 120px;">
-          <div id="spinnerContainer" class="spinner-container">
-            <div class="spinner"></div>
+        <div
+        style="
+          height: auto;
+          width: auto;
+          max-width: 1000px;
+          margin-left: 100px;
+        "
+        >
+
+          <!-- spinner -->
+          <div class="fin" style="margin-left: 120px;">
+            <div id="spinnerContainer" class="spinner-container">
+              <div class="spinner"></div>
+            </div>
+    
+            <label for="statusFilter">Filter dengan Status:</label>
+            <select id="statusFilter">
+                <option value="all">All</option>
+                <option value="Menunggu konfirmasi">Menunggu konfirmasi</option>
+                <option value="menunggu pembayaran">menunggu pembayaran</option>
+                <option value="kue dibuat">kue dibuat</option>
+                <option value="selesai">selesai</option>
+            </select>
+    
+            <!-- <div id="spinnerContainer" class="spinner-container">
+              <div class="spinner"></div>
+            </div> -->
+    
+            <label for="timeFilter">Filter dengan Waktu:</label>
+            <select id="timeFilter">
+                <option value="all">All</option>
+                <option value="1 bulan">1 Bulan</option>
+                <option value="1 minggu">1 Minggu</option>
+            </select>
           </div>
-  
-          <label for="statusFilter">Filter dengan Status:</label>
-          <select id="statusFilter">
-              <option value="all">All</option>
-              <option value="Menunggu konfirmasi">Menunggu konfirmasi</option>
-              <option value="menunggu pembayaran">menunggu pembayaran</option>
-              <option value="kue dibuat">kue dibuat</option>
-              <option value="selesai">selesai</option>
-          </select>
-  
-          <!-- <div id="spinnerContainer" class="spinner-container">
-            <div class="spinner"></div>
-          </div> -->
-  
-          <label for="timeFilter">Filter dengan Waktu:</label>
-          <select id="timeFilter">
-              <option value="all">All</option>
-              <option value="1 bulan">1 Bulan</option>
-              <option value="1 minggu">1 Minggu</option>
-          </select>
+
+          <!-- table -->
+          <div class="container">
+            <div class="table-container" id="tableContainer" style="overflow: auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="no">No.</th>
+                    <th>Nama Pembeli</th>
+                    <th>Alamat Pembeli</th>
+                    <th>No. Telp</th>
+                    <th>Ukuran Cake</th>
+                    <th>Tanggal Pesan</th>
+                    <th>Total Harga</th>
+                    <th class="status">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="tabel-laporan">
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div 
+            class="totalPendapatan"
+            style="
+              background-color: #fff;
+              border-radius: 10px;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+              padding: 20px;
+              text-align: left;
+              margin-bottom: 20px;
+              max-width: 350px;
+              margin-left: auto;
+              ">
+            <h4 style="display: inline;">Harga Total : </h4>
+            <h5 style="display: inline; margin-left: 30px; font-size: 18px; font-weight: normal;" id="total1"></h5>
+          </div>
+
+          <div class="btn-unduh">
+            <button id="unduhButton">
+              Unduh Report
+              <i class="ri-arrow-down-fill"></i>
+            </button>
+          </div>
+          
         </div>
 
-        <!-- table -->
-        <div class="container">
-          <div class="table-container" id="tableContainer">
-            <table>
-              <thead>
-                <tr>
-                  <th class="no">No.</th>
-                  <th>Nama Pembeli</th>
-                  <th>Ukuran Cake</th>
-                  <th>Tanggal Pesan</th>
-                  <th>Total Harga</th>
-                  <th class="status">Status</th>
-                </tr>
-              </thead>
-              <tbody id="tabel-laporan">
-                
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="btn-unduh">
-          <button id="unduhButton">
-            Unduh Report
-            <i class="ri-arrow-down-fill"></i>
-          </button>
-        </div>
       </main>
     </section>
 

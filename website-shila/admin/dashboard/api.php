@@ -56,12 +56,12 @@ if (isset($_GET['action'])){
                     $transactions = $result->fetch_all(MYSQLI_ASSOC);
             
                     // Filter transactions for the last week
-                    $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
-                    $transactionsLastWeek = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
-                        return $transaction['waktu'] >= $oneWeekAgo;
-                    });
+                    // $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
+                    // $transactionsLastWeek = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
+                    //     return $transaction['waktu'] >= $oneWeekAgo;
+                    // });
             
-                    echo json_encode($transactionsLastWeek);
+                    echo json_encode($transactions);
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message" => "Error retrieving data"));
@@ -83,12 +83,12 @@ if (isset($_GET['action'])){
                     $transactions = $result->fetch_all(MYSQLI_ASSOC);
                 
                     // Filter transactions for the last week
-                    $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
-                    $filteredTransactions = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
-                        return $transaction['waktu'] >= $oneWeekAgo;
-                    });
+                    // $oneWeekAgo = date('Y-m-d', strtotime('-7 days'));
+                    // $filteredTransactions = array_filter($transactions, function ($transaction) use ($oneWeekAgo) {
+                        // return $transaction['waktu'] >= $oneWeekAgo;
+                    // });
                 
-                    echo json_encode(array_values($filteredTransactions)); // Mengubah objek menjadi array
+                    echo json_encode(array_values($transactions)); // Mengubah objek menjadi array
                 } else {
                     http_response_code(500);
                     echo json_encode(array("message" => "Error retrieving data"));

@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const statusFilter = document.getElementById("statusFilter");
     const timeFilter = document.getElementById("timeFilter");
@@ -24,6 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Populate the table with the fetched data
                 populateTable(data);
+
+                // hitung total pendapatan
+                const totalPendapatan = calculateTotalPendapatan(data);
+                const formattedTotal = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(totalPendapatan);
+                document.getElementById('total1').textContent = formattedTotal;
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -32,6 +38,20 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
+    // Function to calculate total pendapatan from the fetched data
+    function calculateTotalPendapatan(data) {
+        return data.reduce((sum, item) => {
+            return sum + ((item.status === 'selesai' || item.status === 'kue dibuat') ? parseInt(item.hargatotal) : 0);
+        }, 0);
+    }
+
+    // Fungsi untuk mengubah format mata uang
+    function formatCurrency(amount) {
+        const formattedAmount = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(amount);
+        return formattedAmount;
+    }
+
+    //mengambil data untuk tabel laporan
     function populateTable(data) {
         // Clear existing rows in the table
         tableBody.innerHTML = "";
@@ -47,6 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
             row.innerHTML = `
                 <td>${index + 1}</td>
                 <td>${transaction.nama}</td>
+                <td>${transaction.alamat}</td>
+                <td>${transaction.telp}</td>
                 <td>${transaction.ukuran}</td>
                 <td>${transaction.tanggalpesan}</td>
                 <td>${transaction.hargatotal}</td>
@@ -61,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         applyFilters();
     }
 
+    // filter
     function applyFilters() {
         const selectedStatus = statusFilter.value.toLowerCase();
         const selectedTimeFilter = timeFilter.value.toLowerCase();
@@ -130,6 +153,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // unduh csv
 
+// var btnXsl = document.getElementById('unduhButton');
+// btnXsl.onclick = () => exportData('Xlsx')
+
+// function exportData(type) {
+//     const fileName = 'exported-sheet.' + type;
+
+//     // Fetch data from the API
+//     fetch("http://localhost/a/github/workshop-web/website-shila/admin/laporan/api_laporan.php")
+//         .then(response => response.json())
+//         .then(data => {
+//             const ws = XLSX.utils.json_to_sheet(data);
+
+//             // Custom header
+//             XLSX.utils.sheet_add_aoa(ws, [
+//                 ["Id", "Nama", "Alamat", "Telepon", "Ukuran", "Tanggal Pesan", "Total Harga", "Status"]
+//             ], { origin: "A1" });
+
+//             XLSX.utils.sheet_add_aoa(ws, [
+//                 ["Total Pendapatan"]
+//             ], { origin: "A1" });
+
+//             const wb = XLSX.utils.book_new();
+//             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+//             // Save the workbook
+//             XLSX.writeFile(wb, fileName);
+//         })
+//         .catch(error => console.error('Error fetching data:', error));
+// }
+
 var btnXsl = document.getElementById('unduhButton');
 btnXsl.onclick = () => exportData('Xlsx')
 
@@ -144,8 +197,31 @@ function exportData(type) {
 
             // Custom header
             XLSX.utils.sheet_add_aoa(ws, [
-                ["Id", "Nama", "Ukuran", "Tanggal Pesan", "Total Harga", "Status"]
+                ["No", "Nama", "Alamat", "Telepon", "Ukuran", "Tanggal Pesan", "Total Harga", "Status"]
             ], { origin: "A1" });
+
+            // Add data rows
+            const startingRow = 1; // Start from row 2 to leave space for the header
+            for (let i = 0; i < data.length; i++) {
+                data[i].index = i + 1;
+            }
+            for (let i = 0; i < data.length; i++) {
+                const rowData = [
+                    data[i].index,
+                    data[i].nama,
+                    data[i].alamat,
+                    data[i].telp,
+                    data[i].ukuran,
+                    data[i].tanggalpesan,
+                    data[i].hargatotal,
+                    data[i].status
+                ];
+                XLSX.utils.sheet_add_aoa(ws, [rowData], { origin: { r: startingRow + i, c: 0 } });
+            }
+
+            // Calculate and add total income
+            const totalPendapatan = calculateTotalPendapatan(data);
+            XLSX.utils.sheet_add_aoa(ws, [["", "", "", "", "", "", "Total Pendapatan", totalPendapatan]], { origin: { r: startingRow + data.length + 1, c: 0 } });
 
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
@@ -155,3 +231,11 @@ function exportData(type) {
         })
         .catch(error => console.error('Error fetching data:', error));
 }
+
+// Function to calculate total pendapatan from the fetched data
+function calculateTotalPendapatan(data) {
+    return data.reduce((sum, item) => {
+        return sum + ((item.status === 'selesai' || item.status === 'kue dibuat') ? parseInt(item.hargatotal) : 0);
+    }, 0);
+}
+
