@@ -96,13 +96,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Loop through each row and toggle its visibility based on the selected status and time filter
         rows.forEach(row => {
-            const statusCell = row.querySelector("td:nth-child(6)"); // Assuming status is in the 6th column
-            const dateCell = row.querySelector("td:nth-child(4)"); // Assuming date is in the 4th column
+            const statusCell = row.querySelector("td:nth-child(8)"); // Assuming status is in the 6th column
+            const dateCell = row.querySelector("td:nth-child(6)"); // Assuming date is in the 4th column
 
             const rowStatus = statusCell.textContent.toLowerCase();
             const rowDate = new Date(dateCell.textContent);
 
             const statusFilterMatch = selectedStatus === "all" || rowStatus === selectedStatus;
+            
             const timeFilterMatch = applyTimeFilter(rowDate, selectedTimeFilter);
 
             console.log(`Row Date: ${rowDate}, Status: ${rowStatus}, Status Filter: ${statusFilterMatch}, Time Filter: ${timeFilterMatch}`);
@@ -110,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (statusFilterMatch && timeFilterMatch) {
                 // Show the row if it matches the selected status and time filter
                 row.style.display = "table-row";
-            } else {
+            } else {    
                 // Hide the row if it doesn't match the selected status or time filter
                 row.style.display = "none";
             }

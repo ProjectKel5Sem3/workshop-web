@@ -1,4 +1,4 @@
-
+// periksa apiKey dan imgProfil
 document.addEventListener('DOMContentLoaded', function () {
   // Retrieve apiKey from local storage
   var apiKey = localStorage.getItem('apiKey');

@@ -20,6 +20,7 @@ $query = "SELECT
             JOIN transaksi_detail ON transaksi_detail.id_transaksi = transaksi.id_transaksi
             JOIN detailharga_ukurandanbasecake ON transaksi_detail.id_harga = detailharga_ukurandanbasecake.id_harga
             JOIN ukuran_cake ON detailharga_ukurandanbasecake.id_uk = ukuran_cake.id_ukuran";
+            
 $result = $koneksi->query($query);
             
 if ($result) {

@@ -8,7 +8,7 @@ include '../../connect.php';
 
 $request_method = $_SERVER['REQUEST_METHOD'];
 
-if (isset($_GET['action'])){
+if (isset($_GET['action'])) {
     $action = $_GET['action'];
 
     switch ($request_method){
@@ -111,11 +111,11 @@ if (isset($_GET['action'])){
         http_response_code(405);
         echo json_encode(array("message" => "Method not allowed"));
         break;
-}
+    }
 } else {
-//action tidak diatur
-http_response_code(400);
-echo json_encode(array("message" => "'action' parameter is missing"));
+    //action tidak diatur
+    http_response_code(400);
+    echo json_encode(array("message" => "'action' parameter is missing"));
 }
 
 $koneksi -> close();

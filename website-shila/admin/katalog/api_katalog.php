@@ -24,6 +24,7 @@ if (isset($_GET['action'])){
                 LEFT JOIN ukuran_cake ON detailharga_ukurandanbasecake.id_uk = ukuran_cake.id_ukuran
                 LEFT JOIN basecake ON detailharga_ukurandanbasecake.id_ba = basecake.id_basecake
                 ORDER BY ukuran";
+
                 $result = $koneksi->query($query);
 
                 if ($result) {
@@ -35,6 +36,7 @@ if (isset($_GET['action'])){
                 } 
                 break;
             }
+
             if ($action == 'priceToping') {
                 $query = "SELECT * FROM toping";
                 $result = $koneksi->query($query);
@@ -48,6 +50,7 @@ if (isset($_GET['action'])){
                 } 
                 break;
             }
+
             if ($action == 'baseCake') {
                 $query = "SELECT * FROM basecake";
                 $result = $koneksi->query($query);
@@ -61,6 +64,7 @@ if (isset($_GET['action'])){
                 } 
                 break;
             }
+
             if ($action == 'ukuranCake') {
                 $query = "SELECT * FROM ukuran_cake";
                 $result = $koneksi->query($query);
@@ -74,6 +78,7 @@ if (isset($_GET['action'])){
                 } 
                 break;
             }
+
             if ($action == 'designCake1') {
                 $query = "SELECT * FROM desain WHERE jenis = 'bento'";
                 $result = $koneksi->query($query);
@@ -87,6 +92,7 @@ if (isset($_GET['action'])){
                 } 
                 break;
             }
+            
             // detail data desain
             if ($action == 'designCake2') {
                 $query = "SELECT * FROM desain WHERE jenis = 'birthday'";
